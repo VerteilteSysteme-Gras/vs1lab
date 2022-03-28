@@ -27,10 +27,10 @@
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
-                Latitude: <input name="latitude" type="text" />
-                Longitude: <input name="longitude" type="text" />
-                Name: <input name="name" type="text" />
-                Hashtag: <input name="Hashtag" type="text" />
+                Latitude: <input name="latitude" type="text" id="latitude_id"/>
+                Longitude: <input name="longitude" type="text" id="longitude_id" />
+                Name: <input name="name" type="text" id="name_id" />
+                Hashtag: <input name="Hashtag" type="text" id="hashtag_id"/>
 
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
@@ -43,9 +43,9 @@
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
 
-                Search: <input name="searchterm" type="text" />
-                Longitude: <input name="longitude" type="hidden" />
-                Latitude: <input name="latitude" type="hidden" />
+                Search: <input name="searchterm" type="text" id="search_id"/>
+                <input name="longitude" type="hidden" id="hidden_longitude_id"/>
+                <input name="latitude" type="hidden" id="hidden_latitude_id"/>
 
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
