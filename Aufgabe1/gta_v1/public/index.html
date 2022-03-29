@@ -27,17 +27,17 @@
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
-                <fieldset>
-                <legend>Erste Legende</legend>
+                <fieldset class = "taggingFs">
+                <legend>Add new GeoTag</legend>
 
-                <label for="latitude_id">Latitude: </label>
-                <input name="latitude" type="text" id="latitude_id" placeholder="37.233333" readonly/>
-                <label for="longitude_id">Longitude: </label>
-                <input name="longitude" type="text" id="longitude_id" placeholder="-115.808333" readonly/>
-                <label for="name_id">Name: </label>
-                <input name="name" type="text" id="name_id" placeholder="John Doe (max length 10)" maxlength="10"/>
-                <label for="hashtag_id">Hashtag:  </label>
-                <input name="Hashtag" type="text" id="hashtag_id" placeholder="#Area51" pattern="#.+" maxlength="11"/>
+                <label for="latitude_id">Latitude: </label><br>
+                <input name="latitude" type="text" id="latitude_id" placeholder="37.233333" readonly/><br>
+                <label for="longitude_id">Longitude: </label><br>
+                <input name="longitude" type="text" id="longitude_id" placeholder="-115.808333" readonly/><br>
+                <label for="name_id">Name: </label><br>
+                <input name="name" type="text" id="name_id" placeholder="John Doe (max length 10)" maxlength="10"/><br>
+                <label for="hashtag_id">Hashtag:  </label><br>
+                <input name="Hashtag" type="text" id="hashtag_id" placeholder="#Area51" pattern="#.+" maxlength="11"/><br>
                 <button type="button">absenden</button>
                 </fieldset>
             </form>
@@ -51,8 +51,8 @@
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
 
-                <fieldset>
-                <legend>Zweite Legende</legend>
+                <fieldset class = discoveryFs>
+                <legend>Search</legend>
 
                 <label form="search_id">Search: </label>
                 <input name="searchterm" type="text" id="search_id" placeholder="#Area51"/>

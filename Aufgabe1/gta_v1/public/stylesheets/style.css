@@ -48,6 +48,38 @@ a {
 
 /* ... your code here ... */
 
+/*header*/
+
+.header__title{
+  text-align: center;
+}
+
+/* main */
+
+.main__tagging {
+  float: left;
+  width: 20%;
+}
+
+.main__discovery {
+  float: right;
+  width: 80%;
+}
+
+.taggingFs {
+    margin-left: 10%;
+    margin-right: 10%
+}
+
+.discoveryFs{
+    padding-top: 15px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left:10px;
+  
+}
+/*footer*/
+
 
 /* Grid styles (no changes required) */
 
