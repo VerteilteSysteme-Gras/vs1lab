@@ -51,40 +51,14 @@ a {
 /*header*/
 
 .header {
-  display: flex;
   background: #D3D3D3;
 }
 
-.header.img__header{
-  
-}
 
 /* main */
 
-.main {
-  display: flex;
-}
-
-.main__tagging {
-  font-size: larger;
-  float: left;
-  width: 20%;
-}
-
-.main__discovery {
-  font-size: larger;
-  float: right;
-  width: 80%;
-}
-
-.taggingFs {
-    margin-left: 15%;
-    margin-right: 10%
-}
-
-.discoveryFs{
-  margin-right: 4%
-  
+input{
+  width: 100%;
 }
 /*footer*/
 
