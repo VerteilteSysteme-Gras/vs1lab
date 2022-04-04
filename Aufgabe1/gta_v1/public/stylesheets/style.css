@@ -51,15 +51,20 @@ a {
 /*header*/
 
 .header {
+  border-bottom: 1px solid;
+  border-color: rgb(170, 169, 169);
   padding: 3%;
   display: flex;
   justify-content: space-between;
-  background: #D3D3D3;
+  background: #dad9d9;
 }
 
 .header__image {
   width: 3%;
+  height: 3%;
 }
+
+
 
 /* main */
 
@@ -140,14 +145,15 @@ input {
 
 /* ### TODO ### Styles for Tagging component */
 
-#tag-form {
-  
-}
+
     /* ### TODO ### Styles for Discovery component */
     /* ... your code here ... */
     /* ### TODO ### Styles for Footer Component */
-.footer {
-    background: #D3D3D3;
+.footer{
+  padding: 2.5%;
+  border-top: 1px solid;
+  border-color: rgb(170, 169, 169); 
+  background: #dad9d9;
 }
 
 
