@@ -51,9 +51,14 @@ a {
 /*header*/
 
 .header {
+  display: flex;
+  justify-content: space-between;
   background: #D3D3D3;
 }
 
+.header__image {
+  width: 3%;
+}
 
 /* main */
 
