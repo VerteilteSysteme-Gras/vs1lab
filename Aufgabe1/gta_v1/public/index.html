@@ -30,7 +30,7 @@
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
                 <fieldset class = "taggingFs">
-                <legend>Erste Legende</legend>
+                <legend>Add a new GeoTag</legend>
 
                 <label for="latitude_id">Latitude: </label><br>
                 <input name="latitude" type="text" id="latitude_id" placeholder="37.233333" readonly/><br>
@@ -40,14 +40,14 @@
                 <input name="name" type="text" id="name_id" placeholder="John Doe (max length 10)" maxlength="10"/><br>
                 <label for="hashtag_id">Hashtag:  </label><br>
                 <input name="Hashtag" type="text" id="hashtag_id" placeholder="#Area51" pattern="#.+" maxlength="11"/><br>
-                <button type="button">absenden</button>
+                <button type="button">Add Tag</button>
                 </fieldset>
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
 
         </section>
     </div>
-    <div class="col-10">
+    <div class="col-8">
         <section class="main__discovery discovery">
             <h2 class="discovery__title">Discovery</h2>
 
@@ -60,7 +60,7 @@
                 <input name="searchterm" type="text" id="search_id" placeholder="#Area51"/>
                 <input name="longitude" type="hidden" id="hidden_longitude_id"/>
                 <input name="latitude" type="hidden" id="hidden_latitude_id"/>
-                <button type="button">Send</button>
+                <button type="button">Search</button>
                 </fieldset>
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->

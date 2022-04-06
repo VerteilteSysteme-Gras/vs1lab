@@ -32,6 +32,7 @@ html {
 
 
 /* HTML element styles */
+/* ### TODO ### Styles for other HTML elements */
 
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -44,35 +45,23 @@ a {
     color: var(--link-color);
 }
 
-/* ### TODO ### Styles for other HTML elements */
-
-/* ... your code here ... */
-
-/*header*/
-
-.header {
-  border-bottom: 1px solid;
-  border-color: rgb(170, 169, 169);
-  padding: 3%;
-  display: flex;
-  justify-content: space-between;
-  background: #dad9d9;
-}
 
 .header__image {
-  width: 3%;
-  height: 3%;
+    width: 3%;
+    height: 3%;
 }
-
 
 
 /* main */
 
 input {
-    width: 100%;
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
-
-/*footer*/
 
 
 /* Grid styles (no changes required) */
@@ -133,10 +122,24 @@ input {
 }
 
 
+/*header*/
 /* ### TODO ### Styles for Header Component */
 
-/* ... your code here ... */
+.header {
+    border-bottom: 1px solid;
+    border-color: rgb(170, 169, 169);
+    padding: 3%;
+    display: flex;
+    justify-content: space-between;
+    background: #ebebeb;
+}
 
+button {
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+}
 
 /* ### TODO ### Styles for Main Component */
 
@@ -144,17 +147,37 @@ input {
 
 
 /* ### TODO ### Styles for Tagging component */
+.taggingFs {
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
 
-
-    /* ### TODO ### Styles for Discovery component */
-    /* ... your code here ... */
-    /* ### TODO ### Styles for Footer Component */
-.footer{
-  padding: 2.5%;
-  border-top: 1px solid;
-  border-color: rgb(170, 169, 169); 
-  background: #dad9d9;
 }
+
+/* ### TODO ### Styles for Discovery component */
+ul {
+    list-style: none;
+}
+ul li {
+    border: 1px solid rgb(170, 169, 169);
+    width: 200px;
+    height: 50px;
+    padding-top: 1%;
+    text-align: center;
+    background: #ebebeb;
+    color: #00B7FF;
+    font-weight: bold;
+}
+
+/*footer*/
+/* ### TODO ### Styles for Footer Component */
+.footer {
+    padding: 2.5%;
+    border-top: 1px solid;
+    border-color: rgb(170, 169, 169);
+    background: #ebebeb;
+}
+
 
 
 /* ### TODO ### Media Queries */
