@@ -49,7 +49,7 @@
 
             </section>
         </div>
-        <div class="col-8">
+        <div class="col-10">
 
             <section class="main__discovery discovery">
                 <h2 class="discovery__title">Discovery</h2>
@@ -60,7 +60,7 @@
                     <fieldset class=discoveryFs>
                         <legend>Search</legend>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <input name="searchterm" type="text" id="search_id" placeholder="#Area51"/>
                                 <input name="longitude" type="hidden" id="hidden_longitude_id"/>
                                 <input name="latitude" type="hidden" id="hidden_latitude_id"/>
@@ -70,18 +70,23 @@
                     </fieldset>
                 </form>
                 <!-- ############### VS1Lab 1a Form 2 End -->
+                <div class="row">
+                    <div class="discovery__wrapper">
+                        <div class="col-4">
+                            <div class="discovery__taglist">
+                                <ul class="discovery__results" id="discoveryResults">
+                                    <li>Castle (49.01379, 8.404435) #sight</li>
+                                    <li>IWI (49.01379, 8.390071) #edu</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                <div class="discovery__wrapper">
-                    <div class="discovery__taglist">
-                        <ul class="discovery__results" id="discoveryResults">
-                            <li>Castle (49.01379, 8.404435) #sight</li>
-                            <li>IWI (49.01379, 8.390071) #edu</li>
-                        </ul>
-                    </div>
-
-                    <div class="discovery__map">
-                        <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"/>
-                        <span>Result map</span>
+                        <div class="col-8">
+                            <div class="discovery__map">
+                                <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"/>
+                                <span>Result map</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
