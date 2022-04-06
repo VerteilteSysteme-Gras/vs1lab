@@ -23,12 +23,13 @@
 
 <main class="main">
     <div class="row">
-        <div class="col-2">
+        <div class="col-4">
             <section class="main__tagging tagging">
-                <h2>Tagging</h2>
 
                 <!-- ############### VS1Lab 1a Form 1 Start -->
                 <form id="tag-form" action="/tagging" method="post">
+                    <h2>Tagging</h2>
+
                     <fieldset class="taggingFs">
                         <legend>Add a new GeoTag</legend>
 
@@ -60,7 +61,7 @@
                     <fieldset class=discoveryFs>
                         <legend>Search</legend>
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-4">
                                 <input name="searchterm" type="text" id="search_id" placeholder="#Area51"/>
                                 <input name="longitude" type="hidden" id="hidden_longitude_id"/>
                                 <input name="latitude" type="hidden" id="hidden_latitude_id"/>
@@ -70,8 +71,9 @@
                     </fieldset>
                 </form>
                 <!-- ############### VS1Lab 1a Form 2 End -->
-                <div class="row">
-                    <div class="discovery__wrapper">
+
+                <div class="discovery__wrapper">
+                    <div class="row">
                         <div class="col-4">
                             <div class="discovery__taglist">
                                 <ul class="discovery__results" id="discoveryResults">
