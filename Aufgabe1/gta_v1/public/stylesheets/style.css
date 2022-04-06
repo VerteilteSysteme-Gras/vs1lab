@@ -55,12 +55,12 @@ a {
 /* main */
 
 input {
-    width: 200px;
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgb(170, 169, 169);
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin-top: 1%;
+    margin-bottom: 5%;
 }
 
 
@@ -135,7 +135,7 @@ input {
 }
 
 button {
-    width: 200px;
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgb(170, 169, 169);
@@ -148,16 +148,24 @@ button {
 
 /* ### TODO ### Styles for Tagging component */
 .taggingFs {
-    width: 250px;
+    padding: 5%;
     border-radius: 5px;
     border: 1px solid rgb(170, 169, 169);
-
 }
 
 /* ### TODO ### Styles for Discovery component */
+
+.discoveryFs {
+    //padding: 5%;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+    margin-right: 7.5%;
+}
+
 ul {
     list-style: none;
 }
+
 ul li {
     border: 1px solid rgb(170, 169, 169);
     width: 200px;
@@ -169,6 +177,12 @@ ul li {
     font-weight: bold;
 }
 
+label {
+    //display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
 /*footer*/
 /* ### TODO ### Styles for Footer Component */
 .footer {
@@ -177,7 +191,6 @@ ul li {
     border-color: rgb(170, 169, 169);
     background: #ebebeb;
 }
-
 
 
 /* ### TODO ### Media Queries */
