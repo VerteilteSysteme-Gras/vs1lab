@@ -214,5 +214,34 @@ margin-left: 5%;
 
 
 /* ### TODO ### Media Queries */
+@media screen and (max-width:500px){
+   
+    .row {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+    }
 
+    ul li {
+        width: 80%;
+        margin-left: 3%;
+    }
+
+
+   .col-4{
+       width: 100%;
+   }
+
+   .main__discovery .discovery{
+    margin-left: 10%;
+   }
+   
+   .col-10{
+       width: 100%;
+   }
+
+
+}
 /* ... your code here ... */
