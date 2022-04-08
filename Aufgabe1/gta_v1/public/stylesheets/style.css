@@ -234,21 +234,24 @@ margin-left: 5%;
 
     ul li {
         width: 80%;
-        margin-left: 3%;
     }
 
-
    .col-4{
+       margin-top: 3%;
        width: 100%;
-   }
-
-   .main__discovery .discovery{
-    margin-left: 10%;
    }
    
    .col-10{
-       width: 100%;
+       width: 88%;
+       margin-top: 3%;
+       margin-left: 5%;
    }
+
+   .discoveryFs {
+    padding: 4%;
+    }
+
+
 
 
 }
