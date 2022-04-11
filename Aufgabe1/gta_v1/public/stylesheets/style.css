@@ -230,7 +230,7 @@ margin-left: 5%;
 
 
 /* ### TODO ### Media Queries */
-@media screen and (max-width:600px){
+@media screen and (max-width:850px){
    
     .row {
         width: 100%;
