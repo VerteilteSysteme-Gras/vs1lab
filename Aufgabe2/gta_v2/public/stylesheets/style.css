@@ -1,0 +1,266 @@
+/*
+  File origin: VS1LAB A1b  
+
+  CSS style is BEM. Classes used for CSS, IDs for JavaScript querying (future use).
+  CSS variables used for clarity and themability (e.g. through SSR). 
+  Inherited box sizing used for ease of including 3rd party content-box components.
+*/
+
+/* Global styling */
+
+html {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+
+    /* This approach prevents issues with 3rd party content-box components */
+    box-sizing: inherit;
+}
+
+
+/* Variables (example: see declaration for "a" below) */
+
+:root {
+    --link-color: #00B7FF;
+    --background-color: #efefef;
+    --border-color: #cdcdcd;
+    --gray-color: #666;
+}
+
+
+/* HTML element styles */
+/* ### TODO ### Styles for other HTML elements */
+
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--link-color);
+}
+
+
+.header__image {
+    width: 33px;
+    height: 30px;
+}
+
+
+/* main */
+
+input {
+    width: 100%;
+    padding: 3.5%;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+    margin-top: 1%;
+    margin-bottom: 5%;
+}
+
+
+
+
+/* Grid styles (no changes required) */
+
+.row {
+    margin-top: 3%;
+    margin-bottom: 2%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.col-1 {
+    width: calc(8.33% - 1rem);
+}
+
+.col-2 {
+    width: calc(16.66% - 1rem);
+}
+
+.col-3 {
+    width: calc(25% - 1rem);
+}
+
+.col-4 {
+    width: calc(33.33% - 1rem);
+}
+
+.col-5 {
+    width: calc(41.66% - 1rem);
+}
+
+.col-6 {
+    width: calc(50% - 1rem);
+}
+
+.col-7 {
+    width: calc(58.33% - 1rem);
+}
+
+.col-8 {
+    width: calc(66.66% - 1rem);
+}
+
+.col-9 {
+    width: calc(75% - 1rem);
+}
+
+.col-10 {
+    width: calc(83.33% - 1rem);
+}
+
+.col-11 {
+    width: calc(91.66% - 1rem);
+}
+
+.col-12 {
+    width: calc(100% - 1rem);
+}
+
+
+/*header*/
+/* ### TODO ### Styles for Header Component */
+
+.header {
+    border-bottom: 1px solid;
+    border-color: rgb(170, 169, 169);
+    padding: 3%;
+    display: flex;
+    justify-content: space-between;
+    background: #ebebeb;
+}
+
+button {
+    width: 100%;
+    padding: 3%;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+}
+
+button:hover {
+    background-color: lightgreen;
+}
+
+/* ### TODO ### Styles for Main Component */
+
+main {
+    margin-top: 2.5%;
+    margin-bottom: 5%;
+
+    /*Damit der Footer unten bleibt*/
+    position:relative;
+    min-height:100vh;
+    width: 100%;
+    margin:0;
+    padding:0;
+
+}
+
+/* ### TODO ### Styles for Tagging component */
+.taggingFs {
+    padding: 5%;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+    margin-right: 10%;
+}
+
+/* ### TODO ### Styles for Discovery component */
+
+.discoveryFs {
+    padding: 1%;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 169, 169);
+    margin-right: 2%;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    border: 1px solid rgb(170, 169, 169);
+    width: 100%;
+    height: 100%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    text-align: center;
+    border-radius: 5px;
+    background: #ebebeb;
+    color: #00B7FF;
+    font-weight: bold;
+    margin-top: 5%;
+}
+
+.discovery__map {
+    margin-top: 2.5%;
+    display: grid;
+    margin-right: 3%;
+}
+
+#mapView {
+    border-radius: 2.5%;
+    width: 100%;
+
+}
+
+.main__tagging {
+margin-left: 5%;
+}
+
+/*footer*/
+/* ### TODO ### Styles for Footer Component */
+.footer {
+    position: relative; 
+    bottom: 0px; 
+    width: 100%; 
+    padding: 2.5%;
+    border-top: 1px solid;
+    border-color: rgb(170, 169, 169);
+    background: #ebebeb;
+    margin: 0;
+}
+
+
+/* ### TODO ### Media Queries */
+@media screen and (max-width:850px){
+   
+    .row {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+    }
+
+    ul li {
+        width: 80%;
+    }
+
+   .col-4{
+       margin-top: 3%;
+       width: 100%;
+   }
+   
+   .col-10{
+       width: 88%;
+       margin-top: 3%;
+       margin-left: 5%;
+   }
+
+   .discoveryFs {
+    padding: 4%;
+    }
+
+
+
+
+}
+/* ... your code here ... */
