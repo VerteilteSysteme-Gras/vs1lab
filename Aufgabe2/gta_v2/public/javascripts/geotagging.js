@@ -102,9 +102,8 @@ class MapManager {
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-updateLocation()
-{
-    findLocation();
+function updateLocation(callback) {
+    LocationHelper.findLocation(callback);
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
