@@ -97,38 +97,33 @@ class MapManager {
     }
 }
 
+
 /**
- * TODO: 'updateLocation'
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-function updateLocation(callback) {
+function updateLocation() {
+
+    /**
+     * @param helper {LocationHelper}
+     */
+    function callback(helper) {
+        var longD = document.getElementById("hidden_longitude_id");
+        var latD = document.getElementById("hidden_latitude_id");
+        latD.setAttribute("value", helper.latitude);
+        longD.setAttribute("value", helper.longitude);
+        var longT = document.getElementById("longitude_id");
+        var latT = document.getElementById("latitude_id");
+        latT.setAttribute("value", helper.latitude);
+        longT.setAttribute("value", helper.longitude);
+    }
+
     LocationHelper.findLocation(callback);
 }
 
-
-/**
- * 
- * @param {LocationHelper} location 
- */
-function updateLocation(location){
-    findLocation(location);
-    
-    if(location){
-        location.latitude = irgendwas;
-        locaiton.longitude = irgendetwas;
-    }
-    else{
-        throw new Error("Error while updating location.");
-    }
-
-
-
-};
-
-
-
+//UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
+    //alert("Please change the script 'geotagging.js'");
+    updateLocation();
 });
