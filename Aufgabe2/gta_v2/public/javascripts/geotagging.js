@@ -106,6 +106,28 @@ function updateLocation(callback) {
     LocationHelper.findLocation(callback);
 }
 
+
+/**
+ * 
+ * @param {LocationHelper} location 
+ */
+function updateLocation(location){
+    findLocation(location);
+    
+    if(location){
+        location.latitude = irgendwas;
+        locaiton.longitude = irgendetwas;
+    }
+    else{
+        throw new Error("Error while updating location.");
+    }
+
+
+
+};
+
+
+
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
     alert("Please change the script 'geotagging.js'");
