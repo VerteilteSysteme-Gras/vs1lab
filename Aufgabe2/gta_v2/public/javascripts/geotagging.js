@@ -49,8 +49,8 @@ class LocationHelper {
         geoLocationApi.getCurrentPosition((location) => {
             // Create and initialize LocationHelper object.
             let helper = new LocationHelper();
-            helper.#latitude = location.coords.latitude.toFixed(5);
-            helper.#longitude = location.coords.longitude.toFixed(5);
+            helper.#latitude = location.coords.latitude.toFixed(10);
+            helper.#longitude = location.coords.longitude.toFixed(10);
             // Pass the locationHelper object to the callback.
             callback(helper);
         }, (error) => {
@@ -116,6 +116,9 @@ function updateLocation() {
         var latT = document.getElementById("latitude_id");
         latT.setAttribute("value", helper.latitude);
         longT.setAttribute("value", helper.longitude);
+        var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        var map = document.getElementById("mapView")
+        map.setAttribute("src", manager.getMapUrl(parseInt(helper.latitude), parseInt(helper.longitude)));
     }
 
     LocationHelper.findLocation(callback);
