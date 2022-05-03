@@ -118,7 +118,7 @@ function updateLocation() {
         longT.setAttribute("value", helper.longitude);
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
         var map = document.getElementById("mapView")
-        map.setAttribute("src", manager.getMapUrl(parseInt(helper.latitude), parseInt(helper.longitude)));
+        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
     }
 
     LocationHelper.findLocation(callback);
