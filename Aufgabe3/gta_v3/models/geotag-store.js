@@ -5,6 +5,8 @@
  * Complete all TODOs in the code documentation.
  */
 
+const GeoTagExamples = require("./geotag-examples");
+
 /**
  * A class for in-memory-storage of geotags
  * 
@@ -65,6 +67,12 @@ class InMemoryGeoTagStore{
         });
         return ret;
     }
+
+    populate() {
+        GeoTagExamples.tagList.forEach(function(element){
+          addGeoTag(new GeoTag(element[1], element[2], element[0], element[3]));
+        });
+              };
 
 }
 

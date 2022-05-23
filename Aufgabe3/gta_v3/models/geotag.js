@@ -18,10 +18,10 @@ class GeoTag {
         this.hashtag = hashtag;
     }
 
-    latitude;
-    longitude;
-    name;
-    hashtag;
+    #latitude;
+    #longitude;
+    #name;
+    #hashtag;
 }
 
 module.exports = GeoTag;
