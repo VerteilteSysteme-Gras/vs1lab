@@ -9,7 +9,7 @@
  * A class for in-memory-storage of geotags
  * 
  * Use an array to store a multiset of geotags.
- * - The array must not be accessible from outside the store.
+ * - The array must not be accessible from outside the store.       
  * 
  * Provide a method 'addGeoTag' to add a geotag to the store.
  * 
@@ -25,7 +25,46 @@
  */
 class InMemoryGeoTagStore{
 
-    // TODO: ... your code here ...
+    proximity_radius = 0.1;
+    #alltags = [];
+
+    addGeoTag(gT){
+        this.alltags.push(gT);
+    }
+
+    removeGeoTag(gT){
+        this.alltags.forEach(function(tag){
+            if (tag.name === gT.name)
+                alltags.splice(alltags.indexOf(tag), 1);
+        });
+    }
+
+    getNearbyGeoTags(location){
+
+        var ret = [];
+
+        this.alltags.forEach(function(tag){
+            var difflong = tag.longitude - location.longitude;
+            var difflat = tag.latitude - location.latitude;
+            var distance = Math.sqrt((difflong*difflong) + (difflat*difflat));
+            if (distance <= proximity_radius)
+                ret.push(tag);
+        });
+        return ret;
+    }
+
+    searchNearbyGeoTags(location){
+
+        var ret = [];
+
+        var proximate_l = getNearbyGeoTags(location);
+        proximate_l.forEach(function(tag){
+            if (tag.name === location.name || tag.hashtag === location.hashtag){
+                ret.push(tag);
+            }
+        });
+        return ret;
+    }
 
 }
 
