@@ -27,6 +27,10 @@ const GeoTagExamples = require("./geotag-examples");
  */
 class InMemoryGeoTagStore{
 
+    InMemoryGeoTagStore() {
+        populate();
+    }
+
     proximity_radius = 0.1;
     #alltags = [];
 
