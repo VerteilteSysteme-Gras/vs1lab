@@ -69,7 +69,7 @@ class InMemoryGeoTagStore{
     }
 
     populate() {
-        GeoTagExamples.tagList.forEach(function(element){
+        GeoTagExamples.tagList().forEach(function(element){
           addGeoTag(new GeoTag(element[1], element[2], element[0], element[3]));
         });
               };

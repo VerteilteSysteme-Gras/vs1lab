@@ -11,6 +11,7 @@
  */
 
 const express = require('express');
+const app = require('../app');
 const router = express.Router();
 
 /**
@@ -60,7 +61,24 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
-// TODO: ... your code here ...
+ app.post('/tagging', function(req, res){
+  console.log("tagging");
+    var lat = req.body.latitude;
+    var long = req.body.longitude;
+    var geotag = new GeoTag(lat, long, body.names, body.hashtags);
+
+    GeoTagStore.addGeoTag(geotag);
+
+    res.render('gta', {
+      taglist: GeoTagStore.getNearbyGeoTags(geotag),
+      latitude: lat,
+      longitude: long,
+      tags: JSON.stringify(alltags),
+
+  });
+ });
+
+
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -78,6 +96,26 @@ router.get('/', (req, res) => {
  * by radius and keyword.
  */
 
-// TODO: ... your code here ...
+ app.post('/discovery', function(req, res) {
+  var search = req.body.searchterm;
+  console.log("discovery");
+  if(search.length > 0){
+      res.render('gta', {
+          taglist: GeoTagStore.getNearbyGeoTags(geotag),
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          tags: JSON.stringify(alltags),
+      });
+  }
+  else{
+      res.render('gta', {
+          taglist: alltags,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          tags: JSON.stringify(alltags),
+      });
+  }
+});
+
 
 module.exports = router;
