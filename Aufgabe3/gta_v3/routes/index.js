@@ -14,6 +14,7 @@ const express = require('express');
 const app = require('../app');
 const router = express.Router();
 
+
 /**
  * The module "geotag" exports a class GeoTagStore.
  * It represents geotags.
@@ -62,22 +63,21 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
-router.post('/tagging', function (req, res) {
-    console.log("tagging");
-    console.log("SUCCESSSFULL POST TAGGING");
-    var lat = req.body.latitude;
-    var long = req.body.longitude;
-    var geotag = new GeoTag(lat, long, body.names, body.hashtags);
+ router.post('/tagging', (req, res) => {
+  var latitude = req.body.tagging_latitude;
+  var longitude = req.body.tagging_longitude;
+  var geotagstore = new GeoTagStore();
 
-    GeoTagStore.addGeoTag(geotag);
+  var geoTagObject = new GeoTag(req.body.tagging_name, parseFloat(latitude), parseFloat(longitude), req.body.tagging_hashtag);
 
-    res.render('gta', {
-        taglist: GeoTagStore.getNearbyGeoTags(geotag),
-        latitude: lat,
-        longitude: long,
-        tags: JSON.stringify(alltags),
+  var nearbyGeoTags = geotagstore.getNearbyGeoTags(geoTagObject);
+  nearbyGeoTags.push(geoTagObject);
+  geotagstore.addGeoTag(geoTagObject);
 
-    });
+  res.render('index', { taglist: nearbyGeoTags,
+                         userLatitude: latitude,
+                          userLongitude: longitude,
+                           mapTaglist: JSON.stringify(nearbyGeoTags)  })
 });
 
 
@@ -99,8 +99,6 @@ router.post('/tagging', function (req, res) {
 
 router.post('/discovery', function (req, res) {
     var search = req.body.searchterm;
-    console.log("SUCCESSSFULL POST DISCOVERY");
-    console.log("discovery");
     if (search.length > 0) {
         res.render('gta', {
             taglist: GeoTagStore.getNearbyGeoTags(geotag),
