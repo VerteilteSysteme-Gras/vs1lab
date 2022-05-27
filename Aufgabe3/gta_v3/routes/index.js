@@ -14,6 +14,7 @@ const express = require('express');
 const app = require('../app');
 const router = express.Router();
 
+
 /**
  * The module "geotag" exports a class GeoTagStore. 
  * It represents geotags.
@@ -61,22 +62,24 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
- app.post('/tagging', function(req, res){
-  console.log("tagging");
-    var lat = req.body.latitude;
-    var long = req.body.longitude;
-    var geotag = new GeoTag(lat, long, body.names, body.hashtags);
+ router.post('/tagging', (req, res) => {
+  var name = req.body.tagging_name;
+  var latitude = parseFloat(req.body.tagging_latitude);
+  var longitude = parseFloat(req.body.tagging_longitude);
+  var hashtag = req.body.tagging_hashtag;
+  var geotagstore = new GeoTagStore();
 
-    GeoTagStore.addGeoTag(geotag);
+  var geoTagObject = new GeoTag(name, latitude, longitude, hashtag);
 
-    res.render('gta', {
-      taglist: GeoTagStore.getNearbyGeoTags(geotag),
-      latitude: lat,
-      longitude: long,
-      tags: JSON.stringify(alltags),
+  var nearbyGeoTags = geotagstore.getNearbyGeoTags(geoTagObject);
+  nearbyGeoTags.push(geoTagObject);
+  geotagstore.addGeoTag(geoTagObject);
 
-  });
- });
+  res.render('index', { taglist: nearbyGeoTags,
+                         userLatitude: req.body.tagging_latitude,
+                          userLongitude: req.body.tagging_longitude,
+                           mapTaglist: JSON.stringify(nearbyGeoTags)  })
+});
 
 
 
@@ -96,25 +99,16 @@ router.get('/', (req, res) => {
  * by radius and keyword.
  */
 
- app.post('/discovery', function(req, res) {
-  var search = req.body.searchterm;
-  console.log("discovery");
-  if(search.length > 0){
-      res.render('gta', {
-          taglist: GeoTagStore.getNearbyGeoTags(geotag),
-          latitude: req.body.latitude,
-          longitude: req.body.longitude,
-          tags: JSON.stringify(alltags),
-      });
-  }
-  else{
-      res.render('gta', {
-          taglist: alltags,
-          latitude: req.body.latitude,
-          longitude: req.body.longitude,
-          tags: JSON.stringify(alltags),
-      });
-  }
+ router.post('/discovery', (req, res) => {
+  var keyword = req.body.discovery_searchterm;
+  GeoTagStore.searchNearbyGeoTags
+  var nearbyGeoTags = new GeoTagStore();
+  var nearby = nearbyGeoTags.searchNearbyGeoTags(keyword);
+
+  res.render('index', { taglist: nearbyGeoTags,
+                       userLatitude: req.body.discovery_latitude,
+                       userLongitude: req.body.discovery_longitude,
+                       mapTaglist: JSON.stringify(nearbyGeoTags) })
 });
 
 
