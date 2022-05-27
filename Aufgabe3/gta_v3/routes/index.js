@@ -15,18 +15,18 @@ const app = require('../app');
 const router = express.Router();
 
 /**
- * The module "geotag" exports a class GeoTagStore. 
+ * The module "geotag" exports a class GeoTagStore.
  * It represents geotags.
- * 
+ *
  * TODO: implement the module in the file "../models/geotag.js"
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
 
 /**
- * The module "geotag-store" exports a class GeoTagStore. 
+ * The module "geotag-store" exports a class GeoTagStore.
  * It provides an in-memory store for geotag objects.
- * 
+ *
  * TODO: implement the module in the file "../models/geotag-store.js"
  */
 // eslint-disable-next-line no-unused-vars
@@ -43,7 +43,7 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+    res.render('index', {taglist: []})
     console.log("SUCCESSSFULL GET");
 });
 
@@ -58,28 +58,27 @@ router.get('/', (req, res) => {
  *
  * As response, the ejs-template is rendered with geotag objects.
  * All result objects are located in the proximity of the new geotag.
- * To this end, "GeoTagStore" provides a method to search geotags 
+ * To this end, "GeoTagStore" provides a method to search geotags
  * by radius around a given location.
  */
 
- app.post('/tagging', function(req, res){
-  console.log("tagging");
-     console.log("SUCCESSSFULL POST TAGGING");
-     var lat = req.body.latitude;
+router.post('/tagging', function (req, res) {
+    console.log("tagging");
+    console.log("SUCCESSSFULL POST TAGGING");
+    var lat = req.body.latitude;
     var long = req.body.longitude;
     var geotag = new GeoTag(lat, long, body.names, body.hashtags);
 
     GeoTagStore.addGeoTag(geotag);
 
     res.render('gta', {
-      taglist: GeoTagStore.getNearbyGeoTags(geotag),
-      latitude: lat,
-      longitude: long,
-      tags: JSON.stringify(alltags),
+        taglist: GeoTagStore.getNearbyGeoTags(geotag),
+        latitude: lat,
+        longitude: long,
+        tags: JSON.stringify(alltags),
 
-  });
- });
-
+    });
+});
 
 
 /**
@@ -92,32 +91,31 @@ router.get('/', (req, res) => {
  *
  * As response, the ejs-template is rendered with geotag objects.
  * All result objects are located in the proximity of the given coordinates.
- * If a search term is given, the results are further filtered to contain 
- * the term as a part of their names or hashtags. 
- * To this end, "GeoTagStore" provides methods to search geotags 
+ * If a search term is given, the results are further filtered to contain
+ * the term as a part of their names or hashtags.
+ * To this end, "GeoTagStore" provides methods to search geotags
  * by radius and keyword.
  */
 
- app.post('/discovery', function(req, res) {
-  var search = req.body.searchterm;
-     console.log("SUCCESSSFULL POST DISCOVERY");
-     console.log("discovery");
-  if(search.length > 0){
-      res.render('gta', {
-          taglist: GeoTagStore.getNearbyGeoTags(geotag),
-          latitude: req.body.latitude,
-          longitude: req.body.longitude,
-          tags: JSON.stringify(alltags),
-      });
-  }
-  else{
-      res.render('gta', {
-          taglist: alltags,
-          latitude: req.body.latitude,
-          longitude: req.body.longitude,
-          tags: JSON.stringify(alltags),
-      });
-  }
+router.post('/discovery', function (req, res) {
+    var search = req.body.searchterm;
+    console.log("SUCCESSSFULL POST DISCOVERY");
+    console.log("discovery");
+    if (search.length > 0) {
+        res.render('gta', {
+            taglist: GeoTagStore.getNearbyGeoTags(geotag),
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+            tags: JSON.stringify(alltags),
+        });
+    } else {
+        res.render('gta', {
+            taglist: alltags,
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+            tags: JSON.stringify(alltags),
+        });
+    }
 });
 
 
