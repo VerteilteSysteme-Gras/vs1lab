@@ -44,6 +44,7 @@ const GeoTagStore = require('../models/geotag-store');
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
   res.render('index', { taglist: [] })
+    console.log("SUCCESSSFULL GET");
 });
 
 /**
@@ -63,7 +64,8 @@ router.get('/', (req, res) => {
 
  app.post('/tagging', function(req, res){
   console.log("tagging");
-    var lat = req.body.latitude;
+     console.log("SUCCESSSFULL POST TAGGING");
+     var lat = req.body.latitude;
     var long = req.body.longitude;
     var geotag = new GeoTag(lat, long, body.names, body.hashtags);
 
@@ -98,7 +100,8 @@ router.get('/', (req, res) => {
 
  app.post('/discovery', function(req, res) {
   var search = req.body.searchterm;
-  console.log("discovery");
+     console.log("SUCCESSSFULL POST DISCOVERY");
+     console.log("discovery");
   if(search.length > 0){
       res.render('gta', {
           taglist: GeoTagStore.getNearbyGeoTags(geotag),
