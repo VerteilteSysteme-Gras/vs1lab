@@ -86,7 +86,13 @@
 
                         <div class="col-8">
                             <div class="discovery__map">
-                                <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"/>
+                                <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"
+                                <% if(taglist !== undefined) { %>
+                                    data-tags= <%= JSON.stringify(taglist) %>
+                                <% } else { %>
+                                    data-tags= <%= "" %>
+                                <% } %>
+                                />
                                 <span>Result map</span>
                             </div>
                         </div>
