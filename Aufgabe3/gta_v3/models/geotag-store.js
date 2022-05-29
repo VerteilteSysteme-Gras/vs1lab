@@ -6,7 +6,7 @@
  */
 
 const GeoTagExamples = require("./geotag-examples");
-
+const GeoTag = require("./geotag");
 /**
  * A class for in-memory-storage of geotags
  * 
@@ -27,29 +27,33 @@ const GeoTagExamples = require("./geotag-examples");
  */
 class InMemoryGeoTagStore{
 
-    InMemoryGeoTagStore() {
-        populate();
+    constructor() {
+        this.populate();
     }
 
-    proximity_radius = 0.1;
+    
     #alltags = [];
 
     addGeoTag(gT){
-        this.alltags.push(gT);
+        this.#alltags.push(gT);
+    }
+
+    get geoTags(){
+        return this.#alltags;
     }
 
     removeGeoTag(gT){
-        this.alltags.forEach(function(tag){
+        this.#alltags.forEach(function(tag){
             if (tag.name === gT.name)
-                alltags.splice(alltags.indexOf(tag), 1);
+                this.#alltags.splice(alltags.indexOf(tag), 1);
         });
     }
 
     getNearbyGeoTags(location){
-
+        var proximity_radius = 0.15;
         var ret = [];
 
-        this.alltags.forEach(function(tag){
+        this.#alltags.forEach(function(tag){
             var difflong = tag.longitude - location.longitude;
             var difflat = tag.latitude - location.latitude;
             var distance = Math.sqrt((difflong*difflong) + (difflat*difflat));
@@ -63,7 +67,7 @@ class InMemoryGeoTagStore{
 
         var ret = [];
 
-        var proximate_l = getNearbyGeoTags(location);
+        var proximate_l = this.getNearbyGeoTags(location);
         proximate_l.forEach(function(tag){
             if (tag.name === location.name || tag.hashtag === location.hashtag){
                 ret.push(tag);
@@ -73,8 +77,8 @@ class InMemoryGeoTagStore{
     }
 
     populate() {
-        GeoTagExamples.tagList().forEach(function(element){
-          addGeoTag(new GeoTag(element[1], element[2], element[0], element[3]));
+        GeoTagExamples.tagList.forEach((tag) => {
+            this.addGeoTag(new GeoTag(tag[1], tag[2], tag[0], tag[3]));
         });
               };
 

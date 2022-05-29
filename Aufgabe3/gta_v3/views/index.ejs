@@ -33,9 +33,9 @@
                         <legend>Add a new GeoTag</legend>
 
                         <label for="latitude_id">Latitude: </label>
-                        <input name="latitude" type="text" id="latitude_id" placeholder="37.233333" value<% (function(gtag) {gtag.latitude});%> required/>
+                        <input name="latitude" type="text" id="latitude_id" placeholder="37.233333" value="<%= currentLatitude %>" required/>
                         <label for="longitude_id">Longitude: </label>
-                        <input name="longitude" type="text" id="longitude_id" placeholder="-115.808333" value<% (function(gtag) {gtag.longitude});%> required/>
+                        <input name="longitude" type="text" id="longitude_id" placeholder="-115.808333" value="<%= currentLongitude %>" required/>
                         <label for="name_id">Name: </label>
                         <input name="name" type="text" id="name_id" placeholder="John Doe (max length 10)"
                                maxlength="10" value<% (function(gtag) {gtag.name});%> required/>
@@ -61,9 +61,9 @@
                         <div class="row">
                             <div class="col-4">
                                 <label>Search Term or Keywords: </label>
-                                <input name="searchterm" type="text" id="search_id" placeholder="#Area51" value<% (function(gtag) {gtag.searchterm});%>/>
-                                <input name="longitude" type="hidden" id="hidden_longitude_id" value<% (function(gtag) {gtag.longitude});%>/>
-                                <input name="latitude" type="hidden" id="hidden_latitude_id" value<% (function(gtag) {gtag.latitude});%>/>
+                                <input name="searchterm" type="text" id="search_id" placeholder="#Area51"/>
+                                <input name="longitude" type="hidden" id="hidden_longitude_id" />
+                                <input name="latitude" type="hidden" id="hidden_latitude_id" />
                                 <button type="submit">Search</button>
                             </div>
                         </div>
@@ -87,11 +87,7 @@
                         <div class="col-8">
                             <div class="discovery__map">
                                 <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"
-                                <% if(taglist !== undefined) { %>
-                                    data-tags= <%= JSON.stringify(taglist) %>
-                                <% } else { %>
-                                    data-tags= <%= "" %>
-                                <% } %>
+                                data-tags=<%=JSON.stringify(taglist)%>
                                 />
                                 <span>Result map</span>
                             </div>
