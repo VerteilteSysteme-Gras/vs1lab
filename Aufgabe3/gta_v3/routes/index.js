@@ -34,7 +34,7 @@ const GeoTag = require('../models/geotag');
 const GeoTagStore = require('../models/geotag-store');
 
 var store = new GeoTagStore();
-store.populate();
+//console.log(store.geoTags);
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -47,8 +47,7 @@ store.populate();
 
 // TODO: extend the following route example if necessary
 router.get("/", (req, res) => {
-    store.populate();
-    res.render("index", {
+  res.render("index", {
       taglist: [],
       currentLatitude: null,
       currentLongitude: null,

@@ -10,7 +10,7 @@
 console.log("The geoTagging script is going to start...");
 
 
-const GeoTagStore = require('../../models/geotag-store');
+//const GeoTagStore = require('../../models/geotag-store');
 
 /**
  * A function to retrieve the current location and update the page.
@@ -31,10 +31,16 @@ function updateLocation() {
         latT.setAttribute("value", helper.latitude);
         longT.setAttribute("value", helper.longitude);
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        
         var map = document.getElementById("mapView");
-        let taglist_json = mapElem.getAttribute("data-tags");
+        
+        let taglist_json = map.getAttribute("data-tags");
         let taglist_obj = JSON.parse(taglist_json);
-        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj));
+
+        console.log("TEST!!!!");
+        console.log(taglist_obj);
+        
+        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj, 12));
     }
     var long = document.getElementById("longitude_id");
     var lat = document.getElementById("latitude_id");

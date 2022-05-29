@@ -78,7 +78,8 @@ class InMemoryGeoTagStore{
 
     populate() {
         GeoTagExamples.tagList.forEach((tag) => {
-            this.addGeoTag(new GeoTag(tag[1], tag[2], tag[0], tag[3]));
+            var newGeoTag = new GeoTag(tag[1], tag[2], tag[0], tag[3]);
+            this.addGeoTag(newGeoTag);
         });
               };
 
