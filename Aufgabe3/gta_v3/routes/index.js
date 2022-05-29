@@ -100,14 +100,14 @@ router.get('/', (req, res) => {
 router.post('/discovery', function (req, res) {
     var search = req.body.searchterm;
     if (search.length > 0) {
-        res.render('gta', {
+        res.render('index', {
             taglist: GeoTagStore.getNearbyGeoTags(geotag),
             latitude: req.body.latitude,
             longitude: req.body.longitude,
             tags: JSON.stringify(alltags),
         });
     } else {
-        res.render('gta', {
+        res.render('index', {
             taglist: alltags,
             latitude: req.body.latitude,
             longitude: req.body.longitude,
