@@ -10,8 +10,11 @@
 console.log("The geoTagging script is going to start...");
 
 
+<<<<<<< HEAD
 const GeoTagStore = require('../../models/geotag-store');
 
+=======
+>>>>>>> 91903d16a2292b8907078f5f44cc42e2310c2775
 /**
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
