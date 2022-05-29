@@ -31,15 +31,19 @@ function updateLocation() {
         latT.setAttribute("value", helper.latitude);
         longT.setAttribute("value", helper.longitude);
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
-        var map = document.getElementById("mapView")
-        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
+        var map = document.getElementById("mapView");
+        let taglist_json = mapElem.getAttribute("data-tags");
+        let taglist_obj = JSON.parse(taglist_json);
+        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj));
     }
     var long = document.getElementById("longitude_id");
     var lat = document.getElementById("latitude_id");
-    if ((long === "") && (lat === "")) {
+    const latV = lat.getAttribute("value");
+    const longV = long.getAttribute("value");
+    if ((longV === "") && (latV === "")) {
         LocationHelper.findLocation(callback);    
     }
-    
+    LocationHelper.findLocation(callback); 
 }
 
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
