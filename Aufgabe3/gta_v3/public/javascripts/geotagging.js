@@ -9,6 +9,9 @@
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
 
+
+const GeoTagStore = require('../../models/geotag-store');
+
 /**
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
@@ -31,8 +34,16 @@ function updateLocation() {
         var map = document.getElementById("mapView")
         map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
     }
-
-    LocationHelper.findLocation(callback);
+    var longT = document.getElementById("longitude_id");
+    var latT = document.getElementById("latitude_id");
+    if (longT != null && latT != null) {
+        for (tag in GeoTagStore.geoTags()) {
+            if (tag.latitude === latT && longT === tag.longitude) {
+                return;
+            }
+        }
+        LocationHelper.findLocation(callback);
+    }
 }
 
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
