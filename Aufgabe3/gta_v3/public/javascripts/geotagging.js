@@ -34,16 +34,14 @@ function updateLocation() {
         var map = document.getElementById("mapView")
         map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
     }
-    var longT = document.getElementById("longitude_id");
-    var latT = document.getElementById("latitude_id");
-    if (longT != null && latT != null) {
-        for (tag in GeoTagStore.geoTags()) {
-            if (tag.latitude === latT && longT === tag.longitude) {
-                return;
-            }
-        }
-        LocationHelper.findLocation(callback);
+    var long = document.getElementById("longitude_id");
+    var lat = document.getElementById("latitude_id");
+    var hiddenLong = document.getElementById("hidden_longitude_id");
+    var hiddenLat = document.getElementById("hidden_latitude_id");
+    if (long != null && lat != null && hiddenLong!= null && hiddenLat != null) {
+        return;
     }
+    LocationHelper.findLocation(callback);
 }
 
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
