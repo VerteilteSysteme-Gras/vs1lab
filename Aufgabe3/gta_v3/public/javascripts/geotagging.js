@@ -9,6 +9,7 @@
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
 
+
 /**
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
