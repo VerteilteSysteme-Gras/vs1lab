@@ -53,9 +53,14 @@ class InMemoryGeoTagStore{
         var proximity_radius = 0.15;
         var ret = [];
 
+        //console.log(location.latitude);
+        console.log(location);
+
         this.#alltags.forEach(function(tag){
             var difflong = tag.longitude - location.longitude;
             var difflat = tag.latitude - location.latitude;
+            console.log(location.longitude);
+            console.log(location.latitude);
             var distance = Math.sqrt((difflong*difflong) + (difflat*difflat));
             if (distance <= proximity_radius)
                 ret.push(tag);
@@ -63,17 +68,29 @@ class InMemoryGeoTagStore{
         return ret;
     }
 
-    searchNearbyGeoTags(location){
+    searchNearbyGeoTags(searchterm){
+     /*   let ret = [];
+        let searchTag = this.#alltags.find((geoTag) => {
+            return geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)
+        });
+        this.getNearbyGeoTags(searchTag).find((geoTag) => {
 
-        var ret = [];
+            ret.push(geoTag)
+          });
+        return ret;*/
 
-        var proximate_l = this.getNearbyGeoTags(location);
-        proximate_l.forEach(function(tag){
-            if (tag.name === location.name || tag.hashtag === location.hashtag){
-                ret.push(tag);
+       let ret = [];
+       this.#alltags.find((geoTag) => {
+            if (geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)) {
+                this.getNearbyGeoTags(geoTag).find((tag) => {
+                   if(!ret.includes(tag)) ret.push(tag);
+          });
             }
         });
+        
         return ret;
+         
+        
     }
 
     populate() {

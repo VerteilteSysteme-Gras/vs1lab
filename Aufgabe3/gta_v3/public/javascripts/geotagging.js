@@ -37,8 +37,8 @@ function updateLocation() {
         let taglist_json = map.getAttribute("data-tags");
         let taglist_obj = JSON.parse(taglist_json);
 
-        console.log("TEST!!!!");
-        console.log(taglist_obj);
+        //console.log("TEST!!!!");
+        //console.log(taglist_obj);
         
         map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj, 12));
     }
@@ -49,7 +49,14 @@ function updateLocation() {
     if ((longV === "") && (latV === "")) {
         LocationHelper.findLocation(callback);    
     }
-    LocationHelper.findLocation(callback); 
+    else{
+        var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        var map = document.getElementById("mapView");
+        let taglist_json = map.getAttribute("data-tags");
+        let taglist_obj = JSON.parse(taglist_json);
+        map.setAttribute("src", manager.getMapUrl(latV,longV,taglist_obj, 12));
+    }
+    
 }
 
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
