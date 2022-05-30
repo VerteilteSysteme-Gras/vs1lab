@@ -50,7 +50,7 @@ class InMemoryGeoTagStore{
     }
 
     getNearbyGeoTags(location){
-        var proximity_radius = 0.15;
+        var proximity_radius = 0.05;
         var ret = [];
 
         //console.log(location.latitude);

@@ -46,7 +46,7 @@ function updateLocation() {
     var lat = document.getElementById("latitude_id");
     const latV = lat.getAttribute("value");
     const longV = long.getAttribute("value");
-    if ((longV === "") && (latV === "")) {
+    if ((longV === "") || (latV === "")) {
         LocationHelper.findLocation(callback);    
     }
     else{
