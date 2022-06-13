@@ -34,6 +34,7 @@ const GeoTag = require('../models/geotag');
 const GeoTagStore = require('../models/geotag-store');
 
 var store = new GeoTagStore();
+//console.log(store.geoTags);
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -46,7 +47,7 @@ var store = new GeoTagStore();
 
 // TODO: extend the following route example if necessary
 router.get("/", (req, res) => {
-    res.render("index", {
+  res.render("index", {
       taglist: [],
       currentLatitude: null,
       currentLongitude: null,
@@ -78,7 +79,8 @@ router.get("/", (req, res) => {
     let longitude = req.body.longitude;
   
     let name = req.body.name;
-    let hashtag = req.body.hashtag;
+    let hashtag = req.body.Hashtag;
+    console.log(req.body);
   
     let geoTag = new GeoTag(latitude, longitude, name, hashtag);
     let nearbyGeoTags = store.getNearbyGeoTags(geoTag);
@@ -89,7 +91,8 @@ router.get("/", (req, res) => {
       taglist: nearbyGeoTags,
       currentLatitude: latitude,
       currentLongitude: longitude,
-      mapTaglist: JSON.stringify(store.geoTags)
+      mapTaglist: JSON.stringify(store.geoTags),
+      hashtag: hashtag
     });
   });
 
@@ -111,15 +114,18 @@ router.get("/", (req, res) => {
  */
 
  router.post("/discovery", (req, res) => {
-    let search = req.body.search;
-    console.log(req.body);
+   
+    let search = req.body.searchterm;
     let nearbyGeoTags = store.searchNearbyGeoTags(search);
     
+    console.log(nearbyGeoTags);
+
     res.render("index", {
       taglist: nearbyGeoTags,
       currentLatitude: req.body.latitude,
       currentLongitude: req.body.longitude,
-      mapTaglist: JSON.stringify(store.geoTags)
+      mapTaglist: JSON.stringify(store.geoTags),
+      hashtag: req.body.hashtag,
     });
   });
 

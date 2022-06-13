@@ -10,7 +10,7 @@
 console.log("The geoTagging script is going to start...");
 
 
-const GeoTagStore = require('../../models/geotag-store');
+//const GeoTagStore = require('../../models/geotag-store');
 
 /**
  * A function to retrieve the current location and update the page.
@@ -31,11 +31,33 @@ function updateLocation() {
         latT.setAttribute("value", helper.latitude);
         longT.setAttribute("value", helper.longitude);
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
-        var map = document.getElementById("mapView")
-        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
+
+        var map = document.getElementById("mapView");
+
+        let taglist_json = map.getAttribute("data-tags");
+        let taglist_obj = JSON.parse(taglist_json);
+
+        //console.log("TEST!!!!");
+        //console.log(taglist_obj);
+
+        map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj, 12));
     }
+
     if (document.getElementById("longitude_id") === "" && document.getElementById("latitude_id") === "") {
         LocationHelper.findLocation(callback);
+    }
+    var long = document.getElementById("longitude_id");
+    var lat = document.getElementById("latitude_id");
+    const latV = lat.getAttribute("value");
+    const longV = long.getAttribute("value");
+    if ((longV === "") || (latV === "")) {
+        LocationHelper.findLocation(callback);
+    } else {
+        var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        var map = document.getElementById("mapView");
+        let taglist_json = map.getAttribute("data-tags");
+        let taglist_obj = JSON.parse(taglist_json);
+        map.setAttribute("src", manager.getMapUrl(latV, longV, taglist_obj, 12));
     }
 }
 

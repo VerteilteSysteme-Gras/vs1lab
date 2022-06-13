@@ -11,17 +11,25 @@
  */
 class GeoTag {
 
-    GeoTag(latitude, longitude, name, hashtag) {
+    constructor(latitude, longitude, name, hashtag) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.hashtag = hashtag;
     }
 
+    name;
     latitude;
     longitude;
-    name;
     hashtag;
+
+    toJSON() {
+        return {
+            name: this.name,
+            location: { latitude: this.latitude, longitude: this.longitude },
+            hashtag: this.hashtag
+        }
+    }
 }
 
 module.exports = GeoTag;
