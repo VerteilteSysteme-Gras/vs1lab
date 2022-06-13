@@ -34,14 +34,9 @@ function updateLocation() {
         var map = document.getElementById("mapView")
         map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude));
     }
-    var long = document.getElementById("longitude_id");
-    var lat = document.getElementById("latitude_id");
-    var hiddenLong = document.getElementById("hidden_longitude_id");
-    var hiddenLat = document.getElementById("hidden_latitude_id");
-    if (long != null && lat != null && hiddenLong!= null && hiddenLat != null) {
-        return;
+    if (document.getElementById("longitude_id") === "" && document.getElementById("latitude_id") === "") {
+        LocationHelper.findLocation(callback);
     }
-    LocationHelper.findLocation(callback);
 }
 
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
