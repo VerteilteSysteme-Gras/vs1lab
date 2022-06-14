@@ -135,6 +135,48 @@ router.post("/discovery", (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.get('/api/geotags', (req, res) => {
+  let discoveryQuery = req.query.searchterm;
+  let latitudeQuery = req.query.latitude;
+  let longitudeQuery = req.query.longitude;
+  let location = {
+    latitude: latitudeQuery,
+    longitude: longitudeQuery
+  }
+  let geotag = new GeoTag(latitudeQuery, longitudeQuery, discoveryQuery, discoveryQuery);
+  let filterArray = [];
+  let distance;
+  let nearbyGeoTags = [];
+
+  // if both available then filtered
+  if (discoveryQuery !== undefined && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
+   /**
+    nearbyGeoTags = [];
+    filterArray = store.searchNearbyGeoTags(discoveryQuery);
+    for(let i = 0; i < filterArray.length; i++) {
+      distance = store.calculateDistance(filterArray[i], location);
+      if (distance < 0.270) {
+        nearbyGeoTags.push(filterArray[i]);
+      }
+    }**/
+   nearbyGeoTags = store.getNearbyGeoTags(geotag);
+    for (let tag in nearbyGeoTags) {
+     if(tag.name.includes(discoveryQuery) || tag.hashtag.includes(discoveryQuery)) {
+       nearbyGeoTags.push(tag);
+     }
+    }
+  }
+  // if search term, then filtered
+  else if (discoveryQuery !== undefined) {
+    nearbyGeoTags = tagStore.searchNearbyGeoTags(discoveryQuery);
+  }
+  // if lat + long available, then filtered
+  else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
+    nearbyGeoTags = tagStore.getNearbyGeoTags(location);
+  }
+
+  res.status(200).json(JSON.stringify(nearbyGeoTags));
+});
 
 
 /**

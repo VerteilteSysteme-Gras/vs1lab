@@ -68,17 +68,8 @@ class InMemoryGeoTagStore{
         return ret;
     }
 
+
     searchNearbyGeoTags(searchterm){
-     /*   let ret = [];
-        let searchTag = this.#alltags.find((geoTag) => {
-            return geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)
-        });
-        this.getNearbyGeoTags(searchTag).find((geoTag) => {
-
-            ret.push(geoTag)
-          });
-        return ret;*/
-
        let ret = [];
        this.#alltags.find((geoTag) => {
             if (geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)) {
