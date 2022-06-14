@@ -14,14 +14,14 @@ const express = require('express');
 const router = express.Router();
 
 /**
- * The module "geotag" exports a class GeoTagStore. 
+ * The module "geotag" exports a class GeoTagStore.
  * It represents geotags.
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
 
 /**
- * The module "geotag-store" exports a class GeoTagStore. 
+ * The module "geotag-store" exports a class GeoTagStore.
  * It provides an in-memory store for geotag objects.
  */
 // eslint-disable-next-line no-unused-vars
@@ -41,12 +41,12 @@ var store = new GeoTagStore();
  */
 
 router.get("/", (req, res) => {
-  res.render("index", {
-    taglist: [],
-    currentLatitude: null,
-    currentLongitude: null,
-    mapTaglist: JSON.stringify(store.geoTags)
-  });
+    res.render("index", {
+        taglist: [],
+        currentLatitude: null,
+        currentLongitude: null,
+        mapTaglist: JSON.stringify(store.geoTags)
+    });
 });
 
 /**
@@ -66,25 +66,25 @@ router.get("/", (req, res) => {
 
 router.post("/tagging", (req, res) => {
 
-  let latitude = req.body.latitude;
-  let longitude = req.body.longitude;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
 
-  let name = req.body.name;
-  let hashtag = req.body.Hashtag;
-  
+    let name = req.body.name;
+    let hashtag = req.body.Hashtag;
 
-  let geoTag = new GeoTag(latitude, longitude, name, hashtag);
-  let nearbyGeoTags = store.getNearbyGeoTags(geoTag);
-  nearbyGeoTags.push(geoTag);
-  store.addGeoTag(geoTag);
 
-  res.render("index", {
-    taglist: nearbyGeoTags,
-    currentLatitude: latitude,
-    currentLongitude: longitude,
-    mapTaglist: JSON.stringify(store.geoTags),
-    hashtag: hashtag
-  });
+    let geoTag = new GeoTag(latitude, longitude, name, hashtag);
+    let nearbyGeoTags = store.getNearbyGeoTags(geoTag);
+    nearbyGeoTags.push(geoTag);
+    store.addGeoTag(geoTag);
+
+    res.render("index", {
+        taglist: nearbyGeoTags,
+        currentLatitude: latitude,
+        currentLongitude: longitude,
+        mapTaglist: JSON.stringify(store.geoTags),
+        hashtag: hashtag
+    });
 });
 
 
@@ -106,17 +106,17 @@ router.post("/tagging", (req, res) => {
 
 router.post("/discovery", (req, res) => {
 
-  let search = req.body.searchterm;
-  let nearbyGeoTags = store.searchNearbyGeoTags(search);
+    let search = req.body.searchterm;
+    let nearbyGeoTags = store.searchNearbyGeoTags(search);
 
 
-  res.render("index", {
-    taglist: nearbyGeoTags,
-    currentLatitude: req.body.latitude,
-    currentLongitude: req.body.longitude,
-    mapTaglist: JSON.stringify(store.geoTags),
-    hashtag: req.body.hashtag,
-  });
+    res.render("index", {
+        taglist: nearbyGeoTags,
+        currentLatitude: req.body.latitude,
+        currentLongitude: req.body.longitude,
+        mapTaglist: JSON.stringify(store.geoTags),
+        hashtag: req.body.hashtag,
+    });
 });
 
 // API routes (A4)
@@ -133,48 +133,39 @@ router.post("/discovery", (req, res) => {
  * If 'latitude' and 'longitude' are available, it will be further filtered based on radius.
  */
 
-// TODO: ... your code here ...
 router.get('/api/geotags', (req, res) => {
-  let discoveryQuery = req.query.searchterm;
-  let latitudeQuery = req.query.latitude;
-  let longitudeQuery = req.query.longitude;
-  let location = {
-    latitude: latitudeQuery,
-    longitude: longitudeQuery
-  }
-  let geotag = new GeoTag(latitudeQuery, longitudeQuery, discoveryQuery, discoveryQuery);
-  let filterArray = [];
-  let distance;
-  let nearbyGeoTags = [];
-
-  // if both available then filtered
-  if (discoveryQuery !== undefined && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
-   /**
-    nearbyGeoTags = [];
-    filterArray = store.searchNearbyGeoTags(discoveryQuery);
-    for(let i = 0; i < filterArray.length; i++) {
-      distance = store.calculateDistance(filterArray[i], location);
-      if (distance < 0.270) {
-        nearbyGeoTags.push(filterArray[i]);
-      }
-    }**/
-   nearbyGeoTags = store.getNearbyGeoTags(geotag);
-    for (let tag in nearbyGeoTags) {
-     if(tag.name.includes(discoveryQuery) || tag.hashtag.includes(discoveryQuery)) {
-       nearbyGeoTags.push(tag);
-     }
+    let discoveryQuery = req.query.searchterm;
+    let latitudeQuery = req.query.latitude;
+    let longitudeQuery = req.query.longitude;
+    /**
+     * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
+     * @type {{latitude: (*|Document.latitude|number), longitude: (*|Document.longitude|number)}}
+     */
+    let location = {
+        latitude: latitudeQuery,
+        longitude: longitudeQuery
     }
-  }
-  // if search term, then filtered
-  else if (discoveryQuery !== undefined) {
-    nearbyGeoTags = tagStore.searchNearbyGeoTags(discoveryQuery);
-  }
-  // if lat + long available, then filtered
-  else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
-    nearbyGeoTags = tagStore.getNearbyGeoTags(location);
-  }
+    let filterArray = [];
+    let nearbyGeoTags = [];
 
-  res.status(200).json(JSON.stringify(nearbyGeoTags));
+    if (discoveryQuery !== undefined && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
+        nearbyGeoTags = store.getNearbyGeoTags(location);
+        for (let tag in nearbyGeoTags) {
+            if (tag.name.includes(discoveryQuery) || tag.hashtag.includes(discoveryQuery)) {
+                filterArray.push(tag);
+            }
+        }
+        nearbyGeoTags = filterArray;
+
+    } else if (discoveryQuery !== undefined) {
+        nearbyGeoTags = store.searchNearbyGeoTags(discoveryQuery);
+
+    } else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
+        nearbyGeoTags = store.getNearbyGeoTags(location);
+    } else {
+        res.status(400).send("Error 400, Bad Request: input empty");
+    }
+    res.status(200).json(JSON.stringify(nearbyGeoTags));
 });
 
 
@@ -188,9 +179,14 @@ router.get('/api/geotags', (req, res) => {
  * The URL of the new resource is returned in the header as a response.
  * The new resource is rendered as JSON in the response.
  */
-
-// TODO: ... your code here ...
-
+//TODO: Auf individuelle Namen checken
+router.post("/api/geotags", (req,res) => {
+    let tag = new GeoTag(req.body.location.latitude, req.body.location.longitude,req.body.name, req.body.hashtag);
+    store.addGeoTag(tag);
+    //TODO: Nur hinzugefügten GeoTag zurückgeben, oder alle GeoTags?
+    res.append('URL',"api/geotags/"+req.body.name);
+    res.status(200).json(JSON.stringify(tag));
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'GET' requests.
@@ -202,7 +198,10 @@ router.get('/api/geotags', (req, res) => {
  * The requested tag is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
+router.get("/api/geotags/:id",(req,res) => {
+    let id = req.params.id;
+    res.status(200).json(JSON.stringify(store.searchTagByID(id)));
+});
 
 
 /**
@@ -211,16 +210,19 @@ router.get('/api/geotags', (req, res) => {
  *
  * Requests contain the ID of a tag in the path.
  * (http://expressjs.com/de/4x/api.html#req.params)
- * 
+ *
  * Requests contain a GeoTag as JSON in the body.
  * (http://expressjs.com/de/4x/api.html#req.query)
  *
  * Changes the tag with the corresponding ID to the sent value.
- * The updated resource is rendered as JSON in the response. 
+ * The updated resource is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
-
+router.put("/api/geotags/:id", (req, res) => {
+    let tag = new GeoTag(req.body.latitude,req.body.longitude,req.body.name,req.body.hashtag);
+    store.changeGeoTag(tag,req.params.id)
+    res.status(200).json(JSON.stringify(tag));
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
@@ -233,6 +235,10 @@ router.get('/api/geotags', (req, res) => {
  * The deleted resource is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
+router.delete("/api/geotags/:id", (req,res) => {
+    let id = req.params.id;
+    let deleted = store.removeGeoTag(id);
+    res.status(200).json(JSON.stringify(deleted));
+});
 
 module.exports = router;

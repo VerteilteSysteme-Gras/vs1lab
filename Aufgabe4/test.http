@@ -1,0 +1,13 @@
+###GET
+GET http://localhost:3000/api/geotags?searchterm=Area52
+###POST DISCOVERY
+POST http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+"name":"Area52",
+"location":{"latitude":1,"longitude":100},
+"hashtag":"#sight"
+}
+###POST TAGGING
+POST http://localhost/tagging

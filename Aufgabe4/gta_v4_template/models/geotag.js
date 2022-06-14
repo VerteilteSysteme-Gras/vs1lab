@@ -31,5 +31,4 @@ class GeoTag {
         }
     }
 }
-
 module.exports = GeoTag;

@@ -1,6 +1,0 @@
-###GET
-GET http://localhost:3000/
-###POST DISCOVERY
-POST http://localhost/discovery
-###POST TAGGING
-POST http://localhost/tagging
