@@ -54,13 +54,10 @@ class InMemoryGeoTagStore{
         var ret = [];
 
         //console.log(location.latitude);
-        console.log(location);
 
         this.#alltags.forEach(function(tag){
             var difflong = tag.longitude - location.longitude;
             var difflat = tag.latitude - location.latitude;
-            console.log(location.longitude);
-            console.log(location.latitude);
             var distance = Math.sqrt((difflong*difflong) + (difflat*difflat));
             if (distance <= proximity_radius)
                 ret.push(tag);
