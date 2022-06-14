@@ -71,7 +71,7 @@ router.post("/tagging", (req, res) => {
 
   let name = req.body.name;
   let hashtag = req.body.Hashtag;
-  console.log(req.body);
+  
 
   let geoTag = new GeoTag(latitude, longitude, name, hashtag);
   let nearbyGeoTags = store.getNearbyGeoTags(geoTag);
@@ -109,7 +109,6 @@ router.post("/discovery", (req, res) => {
   let search = req.body.searchterm;
   let nearbyGeoTags = store.searchNearbyGeoTags(search);
 
-  console.log(nearbyGeoTags);
 
   res.render("index", {
     taglist: nearbyGeoTags,
