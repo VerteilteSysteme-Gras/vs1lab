@@ -95,11 +95,21 @@ class InMemoryGeoTagStore {
      * @returns 
      */
     searchTagByID(id) {
+        /** 
         for (let tag in this.#alltags) {
+            console.log(tag.name);
             if (tag.name === id) {
                 return tag;
             }
         }
+        */
+        this.#alltags.find((tag) => {
+            if (tag.name === id) {
+                //console.log("##########tag:");
+                //console.log(tag);
+                return tag;
+            }
+        });
         return null;
     }
 

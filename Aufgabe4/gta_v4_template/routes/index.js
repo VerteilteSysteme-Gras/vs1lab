@@ -163,7 +163,8 @@ router.get('/api/geotags', (req, res) => {
     } else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
     } else {
-        res.status(400).send("Error 400, Bad Request: input empty");
+        //res.status(400).send("Error 400, Bad Request: input empty");
+        res.status(200).json(JSON.stringify(store.geoTags));
     }
     res.status(200).json(JSON.stringify(nearbyGeoTags));
 });
@@ -199,7 +200,9 @@ router.post("/api/geotags", (req,res) => {
  */
 
 router.get("/api/geotags/:id",(req,res) => {
+    
     let id = req.params.id;
+    console.log(store.searchTagByID(id));
     res.status(200).json(JSON.stringify(store.searchTagByID(id)));
 });
 
