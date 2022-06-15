@@ -95,6 +95,7 @@ class InMemoryGeoTagStore {
      * @returns 
      */
     searchTagByID(id) {
+        let ret = null;
         /** 
         for (let tag in this.#alltags) {
             console.log(tag.name);
@@ -105,19 +106,21 @@ class InMemoryGeoTagStore {
         */
         this.#alltags.find((tag) => {
             if (tag.name === id) {
-                //console.log("##########tag:");
-                //console.log(tag);
-                return tag;
+                ret = tag;
             }
         });
-        return null;
+        
+        return ret;
     }
 
     changeGeoTag(geoTag, id){
         let foundGeoTag = this.searchTagByID(id);
         // "!== undefined" nicht notwendig?
+        console.log("foundGeoTag:     ",foundGeoTag);
         if(foundGeoTag !== undefined) {
+            console.log("Vor entfernen#####", this.#alltags);
             this.removeGeoTag(foundGeoTag);
+            console.log("NAch entfernen#####", this.#alltags);
             this.#alltags.push(geoTag);
         }
     }
