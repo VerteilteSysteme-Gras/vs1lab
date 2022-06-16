@@ -43,17 +43,28 @@ class InMemoryGeoTagStore {
         return this.#alltags;
     }
 
-    removeGeoTag(gT) {
-        this.#alltags.forEach(function (tag) {
-            if (tag.name === gT.name)
-                this.#alltags.splice(alltags.indexOf(tag), 1);
-                return gT;
-        });
-        return null;
+    findGeoTagsBySearchTerm(searchterm){
+        let ret = [];
+        for (let i = 0; i < this.#alltags.length; i++) {
+            if (this.#alltags[i].name.includes(searchterm) || this.#alltags[i].hashtag.includes(searchterm)) {
+                ret.push(this.#alltags[i]);
+            }
+        }
+        return ret;
+    }
+
+    removeGeoTag(geoTag) {
+        for (let i = 0; i < this.#alltags.length; i++) {
+            if (this.#alltags[i].name === geoTag.name) {
+                let removedGeoTag = this.#alltags[i];
+                this.#alltags.splice(i, 1);
+                return removedGeoTag;
+            }
+        }
     }
 
     getNearbyGeoTags(location) {
-        var proximity_radius = 0.05;
+        var proximity_radius = 0.1;
         var ret = [];
 
         //console.log(location.latitude);
@@ -116,11 +127,8 @@ class InMemoryGeoTagStore {
     changeGeoTag(geoTag, id){
         let foundGeoTag = this.searchTagByID(id);
         // "!== undefined" nicht notwendig?
-        console.log("foundGeoTag:     ",foundGeoTag);
-        if(foundGeoTag !== undefined) {
-            console.log("Vor entfernen#####", this.#alltags);
+        if(foundGeoTag !== null) {
             this.removeGeoTag(foundGeoTag);
-            console.log("NAch entfernen#####", this.#alltags);
             this.#alltags.push(geoTag);
         }
     }

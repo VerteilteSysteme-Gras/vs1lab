@@ -146,26 +146,24 @@ router.get('/api/geotags', (req, res) => {
         longitude: longitudeQuery
     }
     let filterArray = [];
-    let nearbyGeoTags = [];
+    let nearbyGeoTags = store.geoTags;
 
     if (discoveryQuery !== undefined && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
-        for (let tag in nearbyGeoTags) {
+        
+        nearbyGeoTags.forEach(function (tag) {
             if (tag.name.includes(discoveryQuery) || tag.hashtag.includes(discoveryQuery)) {
                 filterArray.push(tag);
             }
-        }
+        });
         nearbyGeoTags = filterArray;
 
     } else if (discoveryQuery !== undefined) {
-        nearbyGeoTags = store.searchNearbyGeoTags(discoveryQuery);
+        nearbyGeoTags = store.findGeoTagsBySearchTerm(discoveryQuery);
 
     } else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
-    } else {
-        //res.status(400).send("Error 400, Bad Request: input empty");
-        res.status(200).json(JSON.stringify(store.geoTags));
-    }
+    } 
     res.status(200).json(JSON.stringify(nearbyGeoTags));
 });
 
@@ -239,7 +237,8 @@ router.put("/api/geotags/:id", (req, res) => {
 
 router.delete("/api/geotags/:id", (req,res) => {
     let id = req.params.id;
-    let deleted = store.removeGeoTag(id);
+    let tag = new GeoTag("not important","not important",id,"not important");
+    let deleted = store.removeGeoTag(tag);
     res.status(200).json(JSON.stringify(deleted));
 });
 
