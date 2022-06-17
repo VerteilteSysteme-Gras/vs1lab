@@ -145,7 +145,7 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
     let searchTerm = document.getElementById("search_id").value;
-    getTagList(searchTerm).then(updateMap)
+    getTagList(searchTerm).then(updateMap).then(updateList)
         .catch(error => alert("Search term does not exist"));
 });
 
