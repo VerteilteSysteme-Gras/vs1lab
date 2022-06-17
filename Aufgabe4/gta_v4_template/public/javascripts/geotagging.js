@@ -58,20 +58,16 @@ function updateLocation() {
     }
 
     
-    function updateMap() {
+    function updateMap(geotag) {
         console.log("DRIN");
-        var long = document.getElementById("longitude_id");
-        var lat = document.getElementById("latitude_id");
-        const latV = lat.getAttribute("value");
-        const longV = long.getAttribute("value");
-        console.log(latV, "   ", longV);
 
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
         var map = document.getElementById("mapView");
         let taglist_json = map.getAttribute("data-tags");
         let taglist_obj = JSON.parse(taglist_json);
+        console.log(JSON.parse(geotag));
         console.log(taglist_obj);
-        map.setAttribute("src", manager.getMapUrl(latV,longV,taglist_obj, 12));
+        map.setAttribute("src", manager.getMapUrl(JSON.parse(geotag).location.latitude,JSON.parse(geotag).location.longitude, taglist_obj, 12));
     }
 
      //fetch for Tagging
