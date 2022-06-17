@@ -71,13 +71,13 @@ function updateMap(geotags) {
 
     return geotags;
     /**
-    var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
-    var map = document.getElementById("mapView");
-    let taglist_json = map.getAttribute("data-tags");
-    let taglist_obj = JSON.parse(taglist_json);
-    console.log(JSON.parse(geotag));
-    console.log(taglist_obj);
-    map.setAttribute("src", manager.getMapUrl(JSON.parse(geotag).location.latitude, JSON.parse(geotag).location.longitude, taglist_obj, 12)); **/
+     var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+     var map = document.getElementById("mapView");
+     let taglist_json = map.getAttribute("data-tags");
+     let taglist_obj = JSON.parse(taglist_json);
+     console.log(JSON.parse(geotag));
+     console.log(taglist_obj);
+     map.setAttribute("src", manager.getMapUrl(JSON.parse(geotag).location.latitude, JSON.parse(geotag).location.longitude, taglist_obj, 12)); **/
 }
 
 function updateList(tags) {
@@ -85,9 +85,9 @@ function updateList(tags) {
     if (taglist !== undefined) {
         let list = document.getElementById("discoveryResults");
         list.innerHTML = "";
-        taglist.forEach(function(tag) {
+        taglist.forEach(function (tag) {
             let element = document.createElement("li");
-            element.innerHTML = tag.name + "("+tag.latitude+","+tag.longitude+")"+tag.hashtag;
+            element.innerHTML = tag.name + "(" + tag.latitude + "," + tag.longitude + ")" + tag.hashtag;
             list.appendChild(element);
         })
     }
@@ -127,10 +127,10 @@ document.getElementById("tag-form").addEventListener("submit", function (evt) {
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
     let geotag = {
-        name: document.getElementById("name_id").value, location: {
-            latitude: document.getElementById("latitude_id").value,
-            longitude: document.getElementById("longitude_id").value,
-        }, hashtag: document.getElementById("hashtag_id").value
+        name: document.getElementById("name_id").value,
+        latitude: document.getElementById("latitude_id").value,
+        longitude: document.getElementById("longitude_id").value,
+        hashtag: document.getElementById("hashtag_id").value
     }
 
     postAdd(geotag).then(updateMap).then(updateList);

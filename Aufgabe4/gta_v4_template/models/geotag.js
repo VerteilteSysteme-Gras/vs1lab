@@ -26,7 +26,8 @@ class GeoTag {
     toJSON() {
         return {
             name: this.name,
-            location: { latitude: this.latitude, longitude: this.longitude },
+            latitude: this.latitude,
+            longitude: this.longitude,
             hashtag: this.hashtag
         }
     }

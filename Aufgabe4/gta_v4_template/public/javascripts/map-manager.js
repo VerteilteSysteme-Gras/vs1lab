@@ -31,7 +31,7 @@
 
         let tagList = `You,${latitude},${longitude}`;
 
-        tagList += tags.reduce((acc, tag) => `${acc}|${tag.name},${tag.location.latitude},${tag.location.longitude}`, "");
+        tagList += tags.reduce((acc, tag) => `${acc}|${tag.name},${tag.latitude},${tag.longitude}`, "");
         
         
 
