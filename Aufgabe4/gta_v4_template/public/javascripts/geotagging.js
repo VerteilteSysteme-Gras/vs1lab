@@ -58,17 +58,19 @@ function updateLocation() {
     }
 
     
-    function updateMap(geotags) {
+    function updateMap() {
         console.log("DRIN");
         var long = document.getElementById("longitude_id");
         var lat = document.getElementById("latitude_id");
         const latV = lat.getAttribute("value");
         const longV = long.getAttribute("value");
+        console.log(latV, "   ", longV);
 
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
         var map = document.getElementById("mapView");
         let taglist_json = map.getAttribute("data-tags");
         let taglist_obj = JSON.parse(taglist_json);
+        console.log(taglist_obj);
         map.setAttribute("src", manager.getMapUrl(latV,longV,taglist_obj, 12));
     }
 
@@ -123,7 +125,6 @@ function updateLocation() {
         evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
         let searchTerm = document.getElementById("search_id").value;
-
         getTagList(searchTerm).then(updateMap)
             .catch(error => alert("Search term does not exist"));
     });
