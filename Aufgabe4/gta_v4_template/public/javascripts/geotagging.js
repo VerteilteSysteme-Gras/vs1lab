@@ -80,6 +80,19 @@ function updateMap(geotags) {
     map.setAttribute("src", manager.getMapUrl(JSON.parse(geotag).location.latitude, JSON.parse(geotag).location.longitude, taglist_obj, 12)); **/
 }
 
+function updateList(tags) {
+    let taglist = JSON.parse(tags);
+    if (taglist !== undefined) {
+        let list = document.getElementById("discoveryResults");
+        list.innerHTML = "";
+        taglist.forEach(function(tag) {
+            let element = document.createElement("li");
+            element.innerHTML = tag.name + "("+tag.latitude+","+tag.longitude+")"+tag.hashtag;
+            list.appendChild(element);
+        })
+    }
+}
+
 //fetch for Tagging
 
 async function postAdd(geotag) {
@@ -120,7 +133,7 @@ document.getElementById("tag-form").addEventListener("submit", function (evt) {
         }, hashtag: document.getElementById("hashtag_id").value
     }
 
-    postAdd(geotag).then(updateMap);
+    postAdd(geotag).then(updateMap).then(updateList);
     document.getElementById("name_id").value = "";
     document.getElementById("hashtag_id").value = "";
     document.getElementById("search_id").value = "";
