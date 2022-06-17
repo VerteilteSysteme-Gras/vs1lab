@@ -199,7 +199,7 @@ router.post("/api/geotags", (req,res) => {
  */
 
 router.get("/api/geotags/:id",(req,res) => {
-    
+    console.log("ROUTE GET /api/geotags/:id");
     let id = req.params.id;
     res.status(200).json(JSON.stringify(store.searchTagByID(id)));
 });

@@ -109,13 +109,16 @@ async function postAdd(geotag) {
 //fetch for Discovery-Filter
 
 async function getTagList(searchTerm) {
-    let geotag = await fetch("http://localhost:3000/api/geotags/" + searchTerm);
+    console.log("IN getTagList() VOR FETCH");
+    console.log(searchTerm);
+    let searchlink = "http://localhost:3000/api/geotags/:" + searchTerm;
+    let geotag = await fetch(searchlink);
 
     geotag = await geotag.json();
     geotag = JSON.parse(geotag);
 
-    let latitude = geotag.latitude;
-    let longitude = geotag.longitude;
+    let latitude = geotag[0].latitude;
+    let longitude = geotag[0].longitude;
     let response = await fetch("http://localhost:3000/api/geotags?latitude=" + latitude + "&longitude=" + longitude + "&searchterm=" + searchTerm);         //Get mit HTTP Query Parameter
     return await response.json();
 }
