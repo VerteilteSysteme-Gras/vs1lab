@@ -180,7 +180,9 @@ router.get('/api/geotags', (req, res) => {
  */
 //TODO: Auf individuelle Namen checken
 router.post("/api/geotags", (req,res) => {
-    let tag = new GeoTag(req.body.latitude, req.body.longitude,req.body.name, req.body.hashtag);
+    
+    let tag = new GeoTag(req.body.location.latitude, req.body.location.longitude,req.body.name, req.body.hashtag);
+    console.log("DER TAG ",tag);
     store.addGeoTag(tag);
     //TODO: Nur hinzugefügten GeoTag zurückgeben, oder alle GeoTags?
     res.append('URL',"api/geotags/"+req.body.name);

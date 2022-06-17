@@ -73,6 +73,8 @@ function updateLocation() {
      //fetch for Tagging
      
     async function postAdd(geotag) {
+
+        console.log(geotag);
         let response = await fetch("http://localhost:3000/api/geotags", {          //Post mit HTTP
             method: "POST",
             headers: {"Content-Type": "application/json"},                      //MimeType
@@ -104,8 +106,10 @@ function updateLocation() {
 
         let geotag = {
             name: document.getElementById("name_id").value,
-            latitude: document.getElementById("latitude_id").value,
-            longitude: document.getElementById("longitude_id").value,
+            location: {
+                latitude: document.getElementById("latitude_id").value,
+                longitude: document.getElementById("longitude_id").value,
+            },
             hashtag: document.getElementById("hashtag_id").value
         }
 
