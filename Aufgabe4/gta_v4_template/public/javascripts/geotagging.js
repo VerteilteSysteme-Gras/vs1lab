@@ -8,6 +8,7 @@
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
+const elementsPerPage = 7;
 
 
 //const GeoTagStore = require('../../models/geotag-store');
@@ -94,7 +95,8 @@ function updateList(tags) {
 }
 
 function preparePagination(tags) {
-    let pages = Math.ceil(tags.length / 10);
+    updateList(tags);
+    let pages = Math.ceil(tags.length / elementsPerPage);
     document.getElementById("PaginationNext").disabled = false;
     document.getElementById("PaginationPrev").disabled = true;
     document.getElementById("currentPage").innerHTML = "1";
@@ -133,6 +135,17 @@ function updatePagination() {
     } else if (currentPage === maxPageNumber) {
         document.getElementById("paginationNext").disabled = true;
         document.getElementById("paginationPrev").disabled = false;
+    }
+
+    if (currentPage === maxPageNumber) {
+        document.getElementById("paginationNext").disabled = true;
+    } else {
+        document.getElementById("paginationNext").disabled = false;
+    }
+    if (currentPage > 1) {
+        document.getElementById("paginationPrev").disabled = false;
+    } else {
+        document.getElementById("paginationPrev").disabled = true;
     }
 
     document.getElementById("currentPage").innerHTML = currentPage.toString();
@@ -215,5 +228,5 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
-    getTagList().then(updateMap).then(preparePagination).then(updateList);
+    getTagList().then(updateMap).then(preparePagination);
 }, true);

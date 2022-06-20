@@ -247,13 +247,14 @@ router.delete("/api/geotags/:id", (req,res) => {
  * Route '/api/geotags/page/:int' for HTTP POST requests
  */
 router.get('/api/geotags/page/:int', (req,res) => {
+    const elementsPerPage = 7;
     let page = req.params.int - 1;
     let geoTags = req.body;
-    let index = page * 5;
+    let index = page * elementsPerPage;
     let result = [];
     for (let i = index; i < geoTags.length; i++) {
         result.push(geoTags[i]);
-        if (result.length === 5) {
+        if (result.length === elementsPerPage) {
             break;
         }
      }
