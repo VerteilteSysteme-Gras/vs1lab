@@ -93,6 +93,15 @@ function updateList(tags) {
     }
 }
 
+function preparePagination(tags) {
+    let pages = Math.ceil(tags.length / 10);
+    return tags;
+}
+
+function updatePagination(tags) {
+
+}
+
 //fetch for Tagging
 
 async function postAdd(geotag) {
@@ -108,7 +117,7 @@ async function postAdd(geotag) {
 
 //fetch for Discovery-Filter
 
-async function getTagList(searchTerm) {
+async function getTagList(searchTerm = "") {
     //console.log("IN getTagList() VOR FETCH");
     //console.log(searchTerm);
     //let searchlink = "http://localhost:3000/api/geotags/:" + searchTerm;
@@ -157,4 +166,5 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
+    getTagList().then(updateMap).then(preparePagination).then(updateList);
 }, true);

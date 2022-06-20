@@ -263,4 +263,27 @@ margin-left: 5%;
 
 
 }
-/* ... your code here ... */
+.discPagination {
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.discPagination li {
+    padding: 4px;
+}
+
+.discPagination button {
+    padding: 4px 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+}
