@@ -143,6 +143,7 @@ button {
     padding: 3%;
     border-radius: 5px;
     border: 1px solid rgb(170, 169, 169);
+    cursor: pointer;
 }
 
 button:hover {
@@ -263,27 +264,30 @@ margin-left: 5%;
 
 
 }
-.discPagination {
+#discPagination {
     margin: 16px 0;
     padding: 0;
-    list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-.discPagination li {
+#discPagination li {
     padding: 4px;
 }
 
-.discPagination button {
+#discPagination button {
     padding: 4px 6px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 0;
+    border-radius: 5px;
     background: var(--background-color);
     border: 1px solid var(--border-color);
+}
+
+#discPagination button:hover {
+    background-color: lightgreen;
 }
