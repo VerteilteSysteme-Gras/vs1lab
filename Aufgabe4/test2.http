@@ -1,55 +1,53 @@
-//GET all GeoTags
+//GET ohne zusätzliche Information -> alle GeoTags zurückgeben
 GET http://localhost:3000/api/geotags
 Accept: application/json
 ###
 
-//POST one GeoTag
+//POST einen GeoTag posten bla
 POST http://localhost:3000/api/geotags
 Content-Type: application/json
 
 {
-  "name":"test",  
+  "name":"bla",  
   "latitude":"49.013790",
   "longitude":"8.404435",
-  "hashtag":"#test"
+  "hashtag":"#bla"
 }
 ###
 
-//GET one GeoTag
-GET http://localhost:3000/api/geotags/test
+//GET einzelner GeoTag bla
+GET http://localhost:3000/api/geotags/bla
 Accept: application/json
 ###
 
-//GET test 
-GET http://localhost:3000/api/geotags/edu
 
 ###
-//PUT change one GeoTag with name test to Castle2. test is deleted and Castle 2 inserted at the beginning
-PUT http://localhost:3000/api/geotags/test
+//PUT Ändere bla zu blub
+PUT http://localhost:3000/api/geotags/bla
 Content-Type: application/json
 
 {
-  "name":"Castle2",
+  "name":"blub",
   "latitude":"49.013790",
   "longitude":"8.404435",
-  "hashtag":"#sight"
+  "hashtag":"#blub"
 }
 ###
 
-//DELETE one GeoTag
-DELETE http://localhost:3000/api/geotags/Castle2
+//DELETE blub 
+DELETE http://localhost:3000/api/geotags/blub
 ###
 
-//GET all GeoTags filtered with searchterm
-GET http://localhost:3000/api/geotags?searchterm=Building
+//GET nur nach searchterm gefiltert
+GET http://localhost:3000/api/geotags?searchterm=campus
 ###
 
-//GET all GeoTags filtered with location. All GeoTags inside the radius of this location
+//GET nur nach standort gefiltert
 GET http://localhost:3000/api/geotags?latitude=49.00902&longitude=8.39772
 ###
 
-//GET all GeoTags filtered with searchterm AND location
-GET http://localhost:3000/api/geotags?searchterm=Building&latitude=49.00902&longitude=8.39772
+//GET nach searchterm & standort gefiltert
+GET http://localhost:3000/api/geotags?searchterm=campus&latitude=49.00902&longitude=8.39772
 ###
 
 POST http://localhost:3000/api/geotags/page/1

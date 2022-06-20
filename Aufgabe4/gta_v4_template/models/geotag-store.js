@@ -107,14 +107,6 @@ class InMemoryGeoTagStore {
      */
     searchTagByID(id) {
         let ret = null;
-        /** 
-        for (let tag in this.#alltags) {
-            console.log(tag.name);
-            if (tag.name === id) {
-                return tag;
-            }
-        }
-        */
         this.#alltags.find((tag) => {
             if (tag.name === id) {
                 ret = tag;
