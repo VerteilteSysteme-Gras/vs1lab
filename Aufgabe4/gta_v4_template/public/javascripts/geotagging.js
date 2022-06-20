@@ -95,11 +95,60 @@ function updateList(tags) {
 
 function preparePagination(tags) {
     let pages = Math.ceil(tags.length / 10);
+    document.getElementById("PaginationNext").disabled = false;
+    document.getElementById("PaginationPrev").disabled = true;
+    document.getElementById("currentPage").innerHTML = "1";
+    //document.getElementById("listElements").innerHTML = tags.length;
+
+    document.getElementById("maxPage").innerHTML = pages.toString();
+    getPaginationTags(1).then(updatePagination);
     return tags;
 }
 
-function updatePagination(tags) {
+function updatePagination() {
+    let currentPage = parseInt(document.getElementById("currentPage").innerHTML);
+    let taglist = JSON.parse(geotags);
+    if (taglist !== undefined) {
+        let list = document.getElementById("discoveryResults");
+        list.innerHTML = "";
 
+        taglist.forEach(function (gtag) {
+            let li = document.createElement("li");
+            li.innerHTML = gtag.name + " (" + gtag.location.latitude + "," + gtag.location.longitude + ") " + gtag.hashtag;
+            list.appendChild(li);
+        });
+    }
+
+    let maxPageNumber = Math.ceil(actualTaglist.length / NUMBER_OF_TAGS);
+
+    if (currentPage === maxPageNumber && maxPageNumber === 1) {
+        document.getElementById("paginationNext").disabled = true;
+        document.getElementById("paginationPrev").disabled = true;
+    } else if (currentPage < maxPageNumber && currentPage > 1) {
+        document.getElementById("paginationNext").disabled = false;
+        document.getElementById("paginationPrev").disabled = false;
+    } else if (currentPage < maxPageNumber) {
+        document.getElementById("paginationNext").disabled = false;
+        document.getElementById("paginationPrev").disabled = true;
+    } else if (currentPage === maxPageNumber) {
+        document.getElementById("paginationNext").disabled = true;
+        document.getElementById("paginationPrev").disabled = false;
+    }
+
+    document.getElementById("currentPage").innerHTML = currentPage.toString();
+    document.getElementById("listElements").innerHTML = actualTaglist.length;
+    document.getElementById("maxPage").innerHTML = maxPageNumber.toString();
+}
+
+//fetch for Pagination
+
+async function fetchPagination(tags) {
+    let paginationTags = await fetch("http://localhost:3000/api/geotags/page/" + currentPage, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(tags),
+    });
+    return await geotags.json();
 }
 
 //fetch for Tagging

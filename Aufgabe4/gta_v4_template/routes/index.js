@@ -243,4 +243,21 @@ router.delete("/api/geotags/:id", (req,res) => {
     res.status(200).json(JSON.stringify(deleted));
 });
 
+/**
+ * Route '/api/geotags/page/:int' for HTTP POST requests
+ */
+router.get('/api/geotags/page/:int', (req,res) => {
+    let page = req.params.int - 1;
+    let geoTags = req.body;
+    let index = page * 5;
+    let result = [];
+    for (let i = index; i < geoTags.length; i++) {
+        result.push(geoTags[i]);
+        if (result.length === 5) {
+            break;
+        }
+     }
+    res.status(200).json(JSON.stringifiy(retArray));
+});
+
 module.exports = router;
