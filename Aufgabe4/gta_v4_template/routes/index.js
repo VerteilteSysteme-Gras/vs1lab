@@ -183,7 +183,7 @@ router.post("/api/geotags", (req,res) => {
     
     let tag = new GeoTag(req.body.latitude, req.body.longitude,req.body.name, req.body.hashtag);
     store.addGeoTag(tag);
-    console.log("Tags nach Hinzufügen: \n", store.geoTags);
+    //console.log("Tags nach Hinzufügen: \n", store.geoTags);
     res.append('URL',"api/geotags/"+req.body.name);
     res.status(200).json(JSON.stringify(store.geoTags));
 });
@@ -199,7 +199,7 @@ router.post("/api/geotags", (req,res) => {
  */
 
 router.get("/api/geotags/:id",(req,res) => {
-    console.log("ROUTE GET /api/geotags/:id");
+    //console.log("ROUTE GET /api/geotags/:id");
     let id = req.params.id;
     res.status(200).json(JSON.stringify(store.searchTagByID(id)));
 });
@@ -258,7 +258,7 @@ router.get('/api/geotags/page/:int', (req,res) => {
             break;
         }
      }
-    res.status(200).json(JSON.stringifiy(retArray));
+    res.status(200).json(JSON.stringify(result));
 });
 
 module.exports = router;

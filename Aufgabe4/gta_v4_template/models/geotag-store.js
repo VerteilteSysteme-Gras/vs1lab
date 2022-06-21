@@ -36,7 +36,10 @@ class InMemoryGeoTagStore {
     #alltags = [];
 
     addGeoTag(gT) {
-        this.#alltags.push(gT);
+        if(!this.doesNameExist(gT)){
+            this.#alltags.push(gT);
+        }
+        
     }
 
     get geoTags() {
@@ -116,12 +119,21 @@ class InMemoryGeoTagStore {
         return ret;
     }
 
+    doesNameExist(geotag){
+       const tag = this.#alltags.find((tag) => {
+            if (tag.name === geotag.name) {
+                return true;
+            }
+        });
+        return tag != undefined;
+    }
+
     changeGeoTag(geoTag, id){
         let foundGeoTag = this.searchTagByID(id);
         // "!== undefined" nicht notwendig?
         if(foundGeoTag !== null) {
             this.removeGeoTag(foundGeoTag);
-            this.#alltags.push(geoTag);
+            this.addGeoTag(geoTag);
         }
     }
 

@@ -50,7 +50,7 @@ GET http://localhost:3000/api/geotags?latitude=49.00902&longitude=8.39772
 GET http://localhost:3000/api/geotags?searchterm=campus&latitude=49.00902&longitude=8.39772
 ###
 
-POST http://localhost:3000/api/geotags/page/1
+GET http://localhost:3000/api/geotags/page/1
 Content-Type: application/json
 
 [{"name":"Castle","location":{"latitude":49.01379,"longitude":8.404435},"hashtag":"#sight"},

@@ -61,24 +61,18 @@ function updateLocation() {
 }
 
 
-function updateMap(geotags) {
-    console.log("DRIN");
-    console.log(geotags);
-    var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
-    let lat = parseFloat(document.getElementById("latitude_id").getAttribute("value"));
-    let long = parseFloat(document.getElementById("longitude_id").getAttribute("value"));
-    let mapUrl = manager.getMapUrl(lat, long, JSON.parse(geotags));
-    document.getElementById("mapView").setAttribute("src", mapUrl);
-
-    return geotags;
-    /**
-     var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
-     var map = document.getElementById("mapView");
-     let taglist_json = map.getAttribute("data-tags");
-     let taglist_obj = JSON.parse(taglist_json);
-     console.log(JSON.parse(geotag));
-     console.log(taglist_obj);
-     map.setAttribute("src", manager.getMapUrl(JSON.parse(geotag).location.latitude, JSON.parse(geotag).location.longitude, taglist_obj, 12)); **/
+async function updateMap(geotags) {
+    return new Promise((resolve, reject) =>{
+        console.log("DRIN");
+        console.log(geotags);
+        var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        let lat = parseFloat(document.getElementById("latitude_id").getAttribute("value"));
+        let long = parseFloat(document.getElementById("longitude_id").getAttribute("value"));
+        let mapUrl = manager.getMapUrl(lat, long, JSON.parse(geotags));
+        document.getElementById("mapView").setAttribute("src", mapUrl);
+        
+         resolve(geotags);
+    })
 }
 
 function updateList(tags) {
@@ -94,11 +88,11 @@ function updateList(tags) {
     }
 }
 
-function preparePagination(tags) {
+function preparePagination(tags) { // (FUNKTIONIERT NICHT)
     updateList(tags);
     let pages = Math.ceil(tags.length / elementsPerPage);
-    document.getElementById("PaginationNext").disabled = false;
-    document.getElementById("PaginationPrev").disabled = true;
+    document.getElementById("nextPage").disabled = false;
+    document.getElementById("prevPage").disabled = true;
     document.getElementById("currentPage").innerHTML = "1";
     //document.getElementById("listElements").innerHTML = tags.length;
 
@@ -107,64 +101,19 @@ function preparePagination(tags) {
     return tags;
 }
 
-function updatePagination() {
-    let currentPage = parseInt(document.getElementById("currentPage").innerHTML);
-    let taglist = JSON.parse(geotags);
-    if (taglist !== undefined) {
-        let list = document.getElementById("discoveryResults");
-        list.innerHTML = "";
 
-        taglist.forEach(function (gtag) {
-            let li = document.createElement("li");
-            li.innerHTML = gtag.name + " (" + gtag.location.latitude + "," + gtag.location.longitude + ") " + gtag.hashtag;
-            list.appendChild(li);
-        });
-    }
+//fetch Pagination (FNKTIONIERT NICHT))
 
-    let maxPageNumber = Math.ceil(actualTaglist.length / NUMBER_OF_TAGS);
-
-    if (currentPage === maxPageNumber && maxPageNumber === 1) {
-        document.getElementById("paginationNext").disabled = true;
-        document.getElementById("paginationPrev").disabled = true;
-    } else if (currentPage < maxPageNumber && currentPage > 1) {
-        document.getElementById("paginationNext").disabled = false;
-        document.getElementById("paginationPrev").disabled = false;
-    } else if (currentPage < maxPageNumber) {
-        document.getElementById("paginationNext").disabled = false;
-        document.getElementById("paginationPrev").disabled = true;
-    } else if (currentPage === maxPageNumber) {
-        document.getElementById("paginationNext").disabled = true;
-        document.getElementById("paginationPrev").disabled = false;
-    }
-
-    if (currentPage === maxPageNumber) {
-        document.getElementById("paginationNext").disabled = true;
-    } else {
-        document.getElementById("paginationNext").disabled = false;
-    }
-    if (currentPage > 1) {
-        document.getElementById("paginationPrev").disabled = false;
-    } else {
-        document.getElementById("paginationPrev").disabled = true;
-    }
-
-    document.getElementById("currentPage").innerHTML = currentPage.toString();
-    document.getElementById("listElements").innerHTML = actualTaglist.length;
-    document.getElementById("maxPage").innerHTML = maxPageNumber.toString();
-}
-
-//fetch for Pagination
-
-async function fetchPagination(tags) {
+async function getPaginationTags(tags) {
     let paginationTags = await fetch("http://localhost:3000/api/geotags/page/" + currentPage, {
-        method: "GET",
+        method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(tags),
     });
     return await geotags.json();
 }
 
-//fetch for Tagging
+//fetch Tagging
 
 async function postAdd(geotag) {
 
@@ -180,16 +129,6 @@ async function postAdd(geotag) {
 //fetch for Discovery-Filter
 
 async function getTagList(searchTerm = "") {
-    //console.log("IN getTagList() VOR FETCH");
-    //console.log(searchTerm);
-    //let searchlink = "http://localhost:3000/api/geotags/:" + searchTerm;
-    //let geotag = await fetch(searchlink);
-
-    //geotag = await geotag.json();
-    //geotag = JSON.parse(geotag);
-
-    //let latitude = geotag[0].latitude;
-    //let longitude = geotag[0].longitude;
     let response = await fetch("http://localhost:3000/api/geotags?" + "&searchterm=" + searchTerm);         //Get mit HTTP Query Parameter
     return await response.json();
 }
@@ -223,10 +162,30 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
         .catch(error => alert("Search term does not exist"));
 });
 
+
+document.getElementById("prevPage").addEventListener("click", function (evt) {
+    evt.preventDefault();
+
+    let currentPage = parseInt(document.getElementById("currentPage").innerHTML) - 1;
+    document.getElementById("currentPage").innerHTML = currentPage.toString();
+
+    getPaginationTags(currentPage)
+});
+
+document.getElementById("nextPage").addEventListener("click", function (evt) {
+    evt.preventDefault();
+
+    let currentPage = parseInt(document.getElementById("currentPage").innerHTML) + 1;
+    document.getElementById("currentPage").innerHTML = currentPage.toString();
+
+    getPaginationTags(currentPage).then(updatePagination);
+});
+
+
 //UpdateLocation eingefügt, damit es nach jedem Laden der Seite aufgerufen wird
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
-    getTagList().then(updateMap).then(preparePagination);
+    getTagList().then(updateMap).then(updateList)
 }, true);
