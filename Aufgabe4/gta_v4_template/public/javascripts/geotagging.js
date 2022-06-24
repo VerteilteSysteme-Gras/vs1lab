@@ -141,6 +141,7 @@ async function postAdd(geotag) {
 
 async function getTagList(searchTerm = "") {
     let response = await fetch("http://localhost:3000/api/geotags?" + "&searchterm=" + searchTerm);         //Get mit HTTP Query Parameter
+    await console.log(response);
     return await response.filteredTags.json();
 }
 
