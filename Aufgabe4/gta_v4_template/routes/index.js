@@ -139,8 +139,8 @@ router.get('/api/geotags', (req, res) => {
     let longitudeQuery = req.query.longitude;
     let offset = req.query.offset;
     let limit = req.query.limit;
-    console.log(latitudeQuery);
-    console.log(longitudeQuery);
+    console.log("long: "+latitudeQuery);
+    console.log("lat: "+longitudeQuery);
     /**
      * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
      * @type {{latitude: (*|Document.latitude|number), longitude: (*|Document.longitude|number)}}
