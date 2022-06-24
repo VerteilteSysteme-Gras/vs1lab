@@ -139,6 +139,8 @@ router.get('/api/geotags', (req, res) => {
     let longitudeQuery = req.query.longitude;
     let offset = req.query.offset;
     let limit = req.query.limit;
+    console.log(latitudeQuery);
+    console.log(longitudeQuery);
     /**
      * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
      * @type {{latitude: (*|Document.latitude|number), longitude: (*|Document.longitude|number)}}
@@ -149,8 +151,9 @@ router.get('/api/geotags', (req, res) => {
     }
     let filterArray = [];
     let nearbyGeoTags = store.geoTags;
+    console.log("1: "+nearbyGeoTags);
 
-    if (discoveryQuery !== undefined && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
+    if ((discoveryQuery !== undefined && discoveryQuery !== "") && (latitudeQuery !== undefined && longitudeQuery !== undefined)) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
         
         nearbyGeoTags.forEach(function (tag) {
@@ -159,21 +162,29 @@ router.get('/api/geotags', (req, res) => {
             }
         });
         nearbyGeoTags = filterArray;
+        console.log("2.1: "+nearbyGeoTags);
 
-    } else if (discoveryQuery !== undefined) {
+    } else if (discoveryQuery !== undefined && discoveryQuery !== "") {
         nearbyGeoTags = store.findGeoTagsBySearchTerm(discoveryQuery);
+        console.log("2.2: "+nearbyGeoTags);
+
 
     } else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
+        console.log("2.3: "+nearbyGeoTags);
+
     }
     let filteredTags = nearbyGeoTags;
+    console.log("3: "+filteredTags);
     if (offset !== undefined && limit !== undefined) {
         filteredTags = [];
        /* for (let i = offset; i < offset + limit && i < nearbyGeoTags.length; i++) {
             filteredTags.push(nearbyGeoTags[i]);
         }*/
         //TODO offset oder offset -1? => Mögliche Fehlerquelle
-        filteredTags = nearbyGeoTags.slice(offset - 1, offset -1 + limit);
+        console.log("Nearby in if: "+nearbyGeoTags+"\n\n");
+        filteredTags = nearbyGeoTags.slice(offset, offset + limit);
+        console.log("Filtered in if: "+filteredTags);
     }
     let result = {
         filteredTags : filteredTags,

@@ -192,5 +192,6 @@ document.getElementById("nextPage").addEventListener("click", function (evt) {
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
-    getTagList().then(updateMap).then(preparePagination).then(fetchPagination).then(updateList);
+    getTagList().then(updateMap).then(preparePagination);
+    fetchPagination().then(updateList);
 }, true);
