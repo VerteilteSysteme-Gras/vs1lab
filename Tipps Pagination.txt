@@ -1,0 +1,9 @@
+eigener Endpunkt für Pagination schlecht, weil 
+
+1. Keine eigenen Endpoints sondern normalen Endpoint erweitern 
+Idee: Existierende Logik nicht ändern, nur hinzufügen (->slice)
+Nach der Suche limit festlegen und immer nur unter Limit zurückgeben, mit offset definieren welche zurückgegeben werden sollen.
+
+In die Funktion nicht einfach die Tags zurückgeben, sondern Tags + Gesamtzahl der Tags zurückgeben, damit der Client die Anzahl der Seiten feststellen kann
+
+1. Erweitere 

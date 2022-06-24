@@ -35,6 +35,10 @@ class InMemoryGeoTagStore {
 
     #alltags = [];
 
+    /**
+     * Add a {@link GeoTag} to the Array
+     * @param gT GeoTag to add
+     */
     addGeoTag(gT) {
         if(!this.doesNameExist(gT)){
             this.#alltags.push(gT);
@@ -42,10 +46,19 @@ class InMemoryGeoTagStore {
         
     }
 
+    /**
+     * Returns the Array with all the Objects of type {@link GeoTag}
+     * @returns {GeoTag[]}
+     */
     get geoTags() {
         return this.#alltags;
     }
 
+    /**
+     * search the store for all {@link GeoTag GeoTags} which have a hashtag or name matching the searchterm
+     * @param searchterm
+     * @returns {@link GeoTag[]} - Array containing all matching GeoTags
+     */
     findGeoTagsBySearchTerm(searchterm){
         let ret = [];
         for (let i = 0; i < this.#alltags.length; i++) {
@@ -56,6 +69,11 @@ class InMemoryGeoTagStore {
         return ret;
     }
 
+    /**
+     *Remove the {@link GeoTag param GeoTag} with matching name from the store
+     * @param geoTag
+     * @returns {@link GeoTag}
+     */
     removeGeoTag(geoTag) {
         for (let i = 0; i < this.#alltags.length; i++) {
             if (this.#alltags[i].name === geoTag.name) {
@@ -66,6 +84,11 @@ class InMemoryGeoTagStore {
         }
     }
 
+    /**
+     * Returns all geotags in the proximity of a location.
+     * @param location
+     * @returns {*[]}
+     */
     getNearbyGeoTags(location) {
         var proximity_radius = 0.1;
         var ret = [];

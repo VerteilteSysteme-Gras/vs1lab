@@ -137,6 +137,8 @@ router.get('/api/geotags', (req, res) => {
     let discoveryQuery = req.query.searchterm;
     let latitudeQuery = req.query.latitude;
     let longitudeQuery = req.query.longitude;
+    let offset = req.query.offset;
+    let limit = req.query.limit;
     /**
      * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
      * @type {{latitude: (*|Document.latitude|number), longitude: (*|Document.longitude|number)}}
@@ -163,8 +165,21 @@ router.get('/api/geotags', (req, res) => {
 
     } else if (latitudeQuery !== undefined && longitudeQuery !== undefined) {
         nearbyGeoTags = store.getNearbyGeoTags(location);
-    } 
-    res.status(200).json(JSON.stringify(nearbyGeoTags));
+    }
+    let filteredTags = nearbyGeoTags;
+    if (offset !== undefined && limit !== undefined) {
+        filteredTags = [];
+       /* for (let i = offset; i < offset + limit && i < nearbyGeoTags.length; i++) {
+            filteredTags.push(nearbyGeoTags[i]);
+        }*/
+        //TODO offset oder offset -1? => Mögliche Fehlerquelle
+        filteredTags = nearbyGeoTags.slice(offset - 1, offset -1 + limit);
+    }
+    let result = {
+        filteredTags : filteredTags,
+        nearbyGeoTags : nearbyGeoTags.length
+    }
+    res.status(200).json(JSON.stringify(result));
 });
 
 

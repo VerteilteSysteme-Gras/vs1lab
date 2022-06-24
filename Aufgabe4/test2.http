@@ -65,3 +65,7 @@ Content-Type: application/json
   {"name":"Building B","location":{"latitude":49.016843,"longitude":8.391372},"hashtag":"#campus"},
   {"name":"Building K","location":{"latitude":49.01319,"longitude":8.39209},"hashtag":"#campus"}]
 ###
+
+//GET nach searchterm & standort gefiltert
+GET http://localhost:3000/api/geotags?searchterm=campus&latitude=49.00902&longitude=8.39772&offset=2&limit=3
+###
