@@ -41,8 +41,6 @@ function updateLocation() {
         let taglist_obj = JSON.parse(taglist_json);
 
 
-
-
         map.setAttribute("src", manager.getMapUrl(helper.latitude, helper.longitude, taglist_obj, 12));
     }
 
@@ -108,7 +106,7 @@ function preparePagination(tags) {
 
 
 //fetch Pagination
-async function updatePagination(searchterm = undefined) {
+async function fetchPagination(searchterm = undefined) {
     let offset = (page * elementsPerPage) - elementsPerPage;
     return await fetch("http://localhost:3000/api/geotags?&offset=" + offset + "&searchterm=" + searchterm +
         "&limit=" + elementsPerPage + "&latitude=" + document.getElementById("hidden_latitude_id")
@@ -151,7 +149,7 @@ document.getElementById("tag-form").addEventListener("submit", function (evt) {
         hashtag: document.getElementById("hashtag_id").value
     }
 
-    postAdd(geotag).then(updateMap).then(updatePagination);
+    postAdd(geotag).then(updateMap).then(fetchPagination);
     document.getElementById("name_id").value = "";
     document.getElementById("hashtag_id").value = "";
     document.getElementById("search_id").value = "";
@@ -163,7 +161,7 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
     let searchTerm = document.getElementById("search_id").value;
-    getTagList(searchTerm).then(updateMap).then(updatePagination).then(updateList)
+    getTagList(searchTerm).then(updateMap).then(fetchPagination).then(updateList)
         .catch(error => alert("Search term does not exist"));
 });
 
@@ -173,7 +171,7 @@ document.getElementById("prevPage").addEventListener("click", function (evt) {
 
     let prevPage = parseInt(document.getElementById("currentPage").innerHTML) - 1;
 
-    updatePagination(document.getElementById("search_id"), prevPage).then(updateList);
+    fetchPagination(document.getElementById("search_id"), prevPage).then(updateList);
 
     document.getElementById("currentPage").innerHTML = prevPage.toString();
     page--;
@@ -183,7 +181,7 @@ document.getElementById("nextPage").addEventListener("click", function (evt) {
     evt.preventDefault();
 
     let nextPage = parseInt(document.getElementById("currentPage").innerHTML) + 1;
-    updatePagination(document.getElementById("search_id"), nextPage).then(updateList);
+    fetchPagination(document.getElementById("search_id"), nextPage).then(updateList);
     document.getElementById("currentPage").innerHTML = nextPage.toString();
     page++;
 });
@@ -194,5 +192,5 @@ document.getElementById("nextPage").addEventListener("click", function (evt) {
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
-    getTagList().then(updateMap).then(preparePagination).then(updatePagination).then(updateList);
+    getTagList().then(updateMap).then(preparePagination).then(fetchPagination).then(updateList);
 }, true);
