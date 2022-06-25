@@ -137,7 +137,7 @@ router.get('/api/geotags', (req, res) => {
     let discoveryQuery = req.query.searchterm;
     let latitudeQuery = req.query.latitude;
     let longitudeQuery = req.query.longitude;
-    let offset =parseInt( req.query.offset);
+    let offset = parseInt(req.query.offset);
     let limit = parseInt(req.query.limit);
 
     /**
@@ -177,26 +177,10 @@ router.get('/api/geotags', (req, res) => {
     let filteredTags = nearbyGeoTags;
 
     if (offset !== undefined && limit !== undefined) {
-        console.log("Offset: " + offset + "\n");
-        console.log("Limit: " + limit + "\n");
-        console.log("NearbyGeoTagslength: "+nearbyGeoTags.length+"\n");
         filteredTags = [];
-        let ende = offset + limit;
-        console.log(ende);
-        for (let i = offset; i< ende && (i < nearbyGeoTags.length); i++) {
-            console.log("iiii : " + i + "\n");
+        for (let i = offset; i < (offset + limit) && (i < nearbyGeoTags.length); i++) {
             filteredTags.push(nearbyGeoTags[i]);
         }
-        console.log("FilteredTags After:" + filteredTags + "\n");
-
-        /*
-       filteredTags = nearbyGeoTags.slice(offset, offset + limit);
-       console.log("FilteredTags Before:" + filteredTags + "\n");
-       if (filteredTags.length > 7) {
-           filteredTags.slice(0,7);
-       }
-       console.log("FilteredTags After:" + filteredTags + "\n");
-*/
     }
     let result = {
         filteredTags: filteredTags,

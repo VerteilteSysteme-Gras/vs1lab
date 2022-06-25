@@ -63,12 +63,8 @@ function updateLocation() {
 
 
 async function updateMap(geotags) {
-
-    if(typeof geotags === JSON){
-
-    }
     return new Promise((resolve, reject) => {
-        var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
+        let manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
         let lat = parseFloat(document.getElementById("latitude_id").getAttribute("value"));
         let long = parseFloat(document.getElementById("longitude_id").getAttribute("value"));
         let mapUrl = manager.getMapUrl(lat, long, JSON.parse(geotags).filteredTags);
@@ -130,7 +126,7 @@ async function fetchPagination(searchterm = "") {
     console.log("hidden lat in pagination fetch ", (document.getElementById("hidden_latitude_id")).getAttribute("value"),"\n");         //ATUELLER FEHLER: ZUGRIFF AUF HIDDEN VALUE NICHT MÖGLICH ?
     console.log("hidden long in pagination fetch ", document.getElementById("hidden_longitude_id").value,"\n");
     
-    if (searchterm === "" || searchterm == undefined){
+    if (searchterm === "" || searchterm === undefined){
         lat = "";
         long = "";
 
@@ -159,7 +155,8 @@ async function postAdd(geotag) {
 //fetch for Discovery-Filter
 async function getTagList(searchTerm = "") {
     let response = await fetch("http://localhost:3000/api/geotags?" + "&searchterm=" + searchTerm + "&longitude"
-        + document.getElementById("longitude_id").getAttribute("value") + "&latitude" + document.getElementById("latitude_id").getAttribute("value"));         //Get mit HTTP Query Parameter
+        + document.getElementById("longitude_id").getAttribute("value")
+        + "&latitude" + document.getElementById("latitude_id").getAttribute("value"));         //Get mit HTTP Query Parameter
     return await response.json();
 }
 
@@ -186,7 +183,13 @@ document.getElementById("discoveryFilterForm").addEventListener("submit", functi
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
     let searchTerm = document.getElementById("search_id").value;
-    getTagList(searchTerm).then(updateMap).then(fetchPagination).then(updateList)
+    console.log(searchTerm);
+    if (searchTerm.charAt(0) === '#') {
+        searchTerm = searchTerm.slice(1,searchTerm.length);
+    }
+    console.log(searchTerm);
+    //getTagList(searchTerm).then(updateMap).then(fetchPagination).then(updateList)
+    fetchPagination(searchTerm).then(updateMap).then(updateList)
         .catch(error => alert("Search term does not exist"));
 });
 
