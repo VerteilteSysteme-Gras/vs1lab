@@ -137,8 +137,8 @@ router.get('/api/geotags', (req, res) => {
     let discoveryQuery = req.query.searchterm;
     let latitudeQuery = req.query.latitude;
     let longitudeQuery = req.query.longitude;
-    let offset = req.query.offset;
-    let limit = req.query.limit;
+    let offset =parseInt( req.query.offset);
+    let limit = parseInt(req.query.limit);
 
     /**
      * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
@@ -181,7 +181,9 @@ router.get('/api/geotags', (req, res) => {
         console.log("Limit: " + limit + "\n");
         console.log("NearbyGeoTagslength: "+nearbyGeoTags.length+"\n");
         filteredTags = [];
-        for (let i = offset; ((i < (offset + limit)) && (i < nearbyGeoTags.length)); i++) {
+        let ende = offset + limit;
+        console.log(ende);
+        for (let i = offset; i< ende && (i < nearbyGeoTags.length); i++) {
             console.log("iiii : " + i + "\n");
             filteredTags.push(nearbyGeoTags[i]);
         }
