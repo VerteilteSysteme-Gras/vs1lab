@@ -11,6 +11,7 @@
 const elementsPerPage = 7;
 let page = 1;
 let maxPage = 1;
+let offset = 0;
 
 
 //const GeoTagStore = require('../../models/geotag-store');
@@ -62,6 +63,10 @@ function updateLocation() {
 
 
 async function updateMap(geotags) {
+
+    if(typeof geotags === JSON){
+
+    }
     return new Promise((resolve, reject) => {
         var manager = new MapManager("1fuMAYDadogIhChVgO3HQp5oc01EVfDb");
         let lat = parseFloat(document.getElementById("latitude_id").getAttribute("value"));
@@ -78,7 +83,11 @@ function updateList(tags) {
     console.log("inupdatelist: ", JSON.parse(tags), "\n");
     let parsedResponse = JSON.parse(tags);
     let taglist = parsedResponse.filteredTags;
-    let totalResults = parsedResponse.totalGeoTags; //nicht benutzt 
+    let totalResults = parsedResponse.totalGeoTags;
+    maxPage = Math.ceil(totalResults / elementsPerPage);
+    document.getElementById("maxPage").innerHTML = maxPage.toString();
+    console.log("maxPage: "+maxPage+"\n");
+    console.log("TotalResults: "+totalResults + "\n");
 
     if (taglist !== undefined) {
         let list = document.getElementById("discoveryResults");
@@ -107,13 +116,12 @@ function preparePagination(tags) {
 
 //fetch Pagination
 async function fetchPagination(searchterm = "") {
-    let offset;
     let lat = document.getElementById("hidden_latitude_id").value;
     let long = document.getElementById("hidden_longitude_id").value;
     if (page === 1){
-        offset = ((page * elementsPerPage) - elementsPerPage);
+        offset = 0;
     }else{
-       offset = ((page * elementsPerPage) - elementsPerPage)-1;
+       offset = ((page * elementsPerPage) - elementsPerPage);
     }
     
     console.log("offset in pagination fetch ", offset,"\n");
@@ -127,6 +135,7 @@ async function fetchPagination(searchterm = "") {
         long = "";
 
     }
+    console.log("offset von anfrage:" + offset + elementsPerPage +  "\n")
     let pagFetch = await fetch("http://localhost:3000/api/geotags?&offset=" + offset + "&searchterm=" + searchterm +
         "&limit=" + elementsPerPage + "&latitude=" + lat + "&longitude=" + long, {
         method: "GET",
@@ -136,7 +145,6 @@ async function fetchPagination(searchterm = "") {
 }
 
 //fetch Tagging
-
 async function postAdd(geotag) {
 
 
@@ -149,7 +157,6 @@ async function postAdd(geotag) {
 
 
 //fetch for Discovery-Filter
-
 async function getTagList(searchTerm = "") {
     let response = await fetch("http://localhost:3000/api/geotags?" + "&searchterm=" + searchTerm + "&longitude"
         + document.getElementById("longitude_id").getAttribute("value") + "&latitude" + document.getElementById("latitude_id").getAttribute("value"));         //Get mit HTTP Query Parameter
@@ -158,7 +165,6 @@ async function getTagList(searchTerm = "") {
 
 
 // EventListener Tagging-Form
-
 document.getElementById("tag-form").addEventListener("submit", function (evt) {
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
@@ -176,7 +182,6 @@ document.getElementById("tag-form").addEventListener("submit", function (evt) {
 }, true);
 
 // EventListener Discovery-Form
-
 document.getElementById("discoveryFilterForm").addEventListener("submit", function (evt) {
     evt.preventDefault();                                                                   //standardabsenden der formulare verhindert
 
@@ -192,7 +197,8 @@ document.getElementById("prevPage").addEventListener("click", function (evt) {
     let prevPage = parseInt(document.getElementById("currentPage").innerHTML) - 1;
     document.getElementById("currentPage").innerHTML = prevPage.toString();
     page--;
-    fetchPagination(document.getElementById("search_id").value).then(updateList);
+    offset-=elementsPerPage;
+    fetchPagination(document.getElementById("search_id").value).then(updateList);//updateMap
 });
 
 document.getElementById("nextPage").addEventListener("click", function (evt) {
@@ -202,7 +208,9 @@ document.getElementById("nextPage").addEventListener("click", function (evt) {
     console.log("search id in eventlistener",document.getElementById("search_id").value);
     document.getElementById("currentPage").innerHTML = nextPage.toString();
     page++;
-    fetchPagination(document.getElementById("search_id").value).then(updateList);
+    offset+=elementsPerPage;
+
+    fetchPagination(document.getElementById("search_id").value).then(updateList);//updateMap
 });
 
 

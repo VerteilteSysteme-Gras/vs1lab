@@ -139,11 +139,7 @@ router.get('/api/geotags', (req, res) => {
     let longitudeQuery = req.query.longitude;
     let offset = req.query.offset;
     let limit = req.query.limit;
-    console.log("Discovery Query in API ",discoveryQuery,"\n");
-    console.log("Latitude Query in API ",latitudeQuery,"\n");
-    console.log("Longitude Query in API ",longitudeQuery,"\n");
-    console.log("Offset Query in API ",offset,"\n");
-    console.log("limit Query in API ",limit,"\n");
+
     /**
      * location contains latitude and longitude, which is sufficient for a use in geotag-store.getNearbyGeoTags()
      * @type {{latitude: (*|Document.latitude|number), longitude: (*|Document.longitude|number)}}
@@ -156,9 +152,9 @@ router.get('/api/geotags', (req, res) => {
     let nearbyGeoTags = store.geoTags;
 
     if ((discoveryQuery !== undefined && discoveryQuery !== "") && (latitudeQuery !== undefined && latitudeQuery !== "" && longitudeQuery !== undefined && longitudeQuery !== "")) {
-        console.log("1.");
+
         nearbyGeoTags = store.getNearbyGeoTags(location);
-        
+
         nearbyGeoTags.forEach(function (tag) {
             if (tag.name.includes(discoveryQuery) || tag.hashtag.includes(discoveryQuery)) {
                 filterArray.push(tag);
@@ -168,13 +164,12 @@ router.get('/api/geotags', (req, res) => {
 
 
     } else if (discoveryQuery !== undefined && discoveryQuery !== "") {
-        console.log("2.");
+
         nearbyGeoTags = store.findGeoTagsBySearchTerm(discoveryQuery);
 
 
-
     } else if (latitudeQuery !== undefined && latitudeQuery !== "" && longitudeQuery !== undefined && longitudeQuery !== "") {
-        console.log("3.");
+
         nearbyGeoTags = store.getNearbyGeoTags(location);
 
 
@@ -182,21 +177,30 @@ router.get('/api/geotags', (req, res) => {
     let filteredTags = nearbyGeoTags;
 
     if (offset !== undefined && limit !== undefined) {
-        console.log("4.");
+        console.log("Offset: " + offset + "\n");
+        console.log("Limit: " + limit + "\n");
+        console.log("NearbyGeoTagslength: "+nearbyGeoTags.length+"\n");
         filteredTags = [];
-       /* for (let i = offset; i < offset + limit && i < nearbyGeoTags.length; i++) {
+        for (let i = offset; ((i < (offset + limit)) && (i < nearbyGeoTags.length)); i++) {
+            console.log("iiii : " + i + "\n");
             filteredTags.push(nearbyGeoTags[i]);
-        }*/
-        //TODO offset oder offset -1? => Mögliche Fehlerquelle
+        }
+        console.log("FilteredTags After:" + filteredTags + "\n");
 
-        filteredTags = nearbyGeoTags.slice(offset, offset + limit);
-
+        /*
+       filteredTags = nearbyGeoTags.slice(offset, offset + limit);
+       console.log("FilteredTags Before:" + filteredTags + "\n");
+       if (filteredTags.length > 7) {
+           filteredTags.slice(0,7);
+       }
+       console.log("FilteredTags After:" + filteredTags + "\n");
+*/
     }
     let result = {
-        filteredTags : filteredTags,
-        totalGeoTags : nearbyGeoTags.length
+        filteredTags: filteredTags,
+        totalGeoTags: nearbyGeoTags.length
     }
-    console.log("Rückgabe von API: ", result, "\n");
+
     res.status(200).json(JSON.stringify(result));
 });
 
@@ -212,12 +216,12 @@ router.get('/api/geotags', (req, res) => {
  * The new resource is rendered as JSON in the response.
  */
 //TODO: Auf individuelle Namen checken
-router.post("/api/geotags", (req,res) => {
-    
-    let tag = new GeoTag(req.body.latitude, req.body.longitude,req.body.name, req.body.hashtag);
+router.post("/api/geotags", (req, res) => {
+
+    let tag = new GeoTag(req.body.latitude, req.body.longitude, req.body.name, req.body.hashtag);
     store.addGeoTag(tag);
     //console.log("Tags nach Hinzufügen: \n", store.geoTags);
-    res.append('URL',"api/geotags/"+req.body.name);
+    res.append('URL', "api/geotags/" + req.body.name);
     res.status(200).json(JSON.stringify(store.geoTags));
 });
 
@@ -231,7 +235,7 @@ router.post("/api/geotags", (req,res) => {
  * The requested tag is rendered as JSON in the response.
  */
 
-router.get("/api/geotags/:id",(req,res) => {
+router.get("/api/geotags/:id", (req, res) => {
     //console.log("ROUTE GET /api/geotags/:id");
     let id = req.params.id;
     res.status(200).json(JSON.stringify(store.searchTagByID(id)));
@@ -253,8 +257,8 @@ router.get("/api/geotags/:id",(req,res) => {
  */
 
 router.put("/api/geotags/:id", (req, res) => {
-    let tag = new GeoTag(req.body.latitude,req.body.longitude,req.body.name,req.body.hashtag);
-    store.changeGeoTag(tag,req.params.id)
+    let tag = new GeoTag(req.body.latitude, req.body.longitude, req.body.name, req.body.hashtag);
+    store.changeGeoTag(tag, req.params.id)
     res.status(200).json(JSON.stringify(tag));
 });
 
@@ -269,9 +273,9 @@ router.put("/api/geotags/:id", (req, res) => {
  * The deleted resource is rendered as JSON in the response.
  */
 
-router.delete("/api/geotags/:id", (req,res) => {
+router.delete("/api/geotags/:id", (req, res) => {
     let id = req.params.id;
-    let tag = new GeoTag("not important","not important",id,"not important");
+    let tag = new GeoTag("not important", "not important", id, "not important");
     let deleted = store.removeGeoTag(tag);
     res.status(200).json(JSON.stringify(deleted));
 });
@@ -279,7 +283,7 @@ router.delete("/api/geotags/:id", (req,res) => {
 /**
  * Route '/api/geotags/page/:int' for HTTP POST requests
  */
-router.get('/api/geotags/page/:int', (req,res) => {
+router.get('/api/geotags/page/:int', (req, res) => {
     const elementsPerPage = 7;
     let page = req.params.int - 1;
     let geoTags = req.body;
@@ -290,7 +294,7 @@ router.get('/api/geotags/page/:int', (req,res) => {
         if (result.length === elementsPerPage) {
             break;
         }
-     }
+    }
     res.status(200).json(JSON.stringify(result));
 });
 
