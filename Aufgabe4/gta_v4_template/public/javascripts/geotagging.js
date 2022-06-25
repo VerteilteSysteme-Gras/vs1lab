@@ -75,10 +75,10 @@ async function updateMap(geotags) {
 
 
 function updateList(tags) {
-
-    let pastResponse = tags;
-    let taglist = pastResponse.filteredTags;
-    let totalResults = pastResponse.totalGeoTags;
+    console.log("inupdatelist: ", JSON.parse(tags), "\n");
+    let parsedResponse = JSON.parse(tags);
+    let taglist = parsedResponse.filteredTags;
+    let totalResults = parsedResponse.totalGeoTags; //nicht benutzt 
 
     if (taglist !== undefined) {
         let list = document.getElementById("discoveryResults");
@@ -106,14 +106,33 @@ function preparePagination(tags) {
 
 
 //fetch Pagination
-async function fetchPagination(searchterm = undefined) {
-    let offset = (page * elementsPerPage) - elementsPerPage;
-    return await fetch("http://localhost:3000/api/geotags?&offset=" + offset + "&searchterm=" + searchterm +
-        "&limit=" + elementsPerPage + "&latitude=" + document.getElementById("hidden_latitude_id")
-        + "&longitude=" + document.getElementById("hidden_longitude_id"), {
+async function fetchPagination(searchterm = "") {
+    let offset;
+    let lat = document.getElementById("hidden_latitude_id").value;
+    let long = document.getElementById("hidden_longitude_id").value;
+    if (page === 1){
+        offset = ((page * elementsPerPage) - elementsPerPage);
+    }else{
+       offset = ((page * elementsPerPage) - elementsPerPage)-1;
+    }
+    
+    console.log("offset in pagination fetch ", offset,"\n");
+    console.log("searchterm in pagination fetch ", searchterm,"\n");
+    console.log("limit in pagination fetch ", elementsPerPage,"\n");
+    console.log("hidden lat in pagination fetch ", (document.getElementById("hidden_latitude_id")).getAttribute("value"),"\n");         //ATUELLER FEHLER: ZUGRIFF AUF HIDDEN VALUE NICHT MÖGLICH ?
+    console.log("hidden long in pagination fetch ", document.getElementById("hidden_longitude_id").value,"\n");
+    
+    if (searchterm === "" || searchterm == undefined){
+        lat = "";
+        long = "";
+
+    }
+    let pagFetch = await fetch("http://localhost:3000/api/geotags?&offset=" + offset + "&searchterm=" + searchterm +
+        "&limit=" + elementsPerPage + "&latitude=" + lat + "&longitude=" + long, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
     });
+    return await pagFetch.json();                   //Hier Änderung von direktem return zu doppeltem await -> somit kommt in updatelist was. an bruh hat 1h gedauert
 }
 
 //fetch Tagging
@@ -170,20 +189,19 @@ document.getElementById("prevPage").addEventListener("click", function (evt) {
     evt.preventDefault();
 
     let prevPage = parseInt(document.getElementById("currentPage").innerHTML) - 1;
-
-    fetchPagination(document.getElementById("search_id"), prevPage).then(updateList);
-
     document.getElementById("currentPage").innerHTML = prevPage.toString();
     page--;
+    fetchPagination(document.getElementById("search_id").value).then(updateList);
 });
 
 document.getElementById("nextPage").addEventListener("click", function (evt) {
     evt.preventDefault();
 
     let nextPage = parseInt(document.getElementById("currentPage").innerHTML) + 1;
-    fetchPagination(document.getElementById("search_id"), nextPage).then(updateList);
+    console.log("search id in eventlistener",document.getElementById("search_id").value);
     document.getElementById("currentPage").innerHTML = nextPage.toString();
     page++;
+    fetchPagination(document.getElementById("search_id").value).then(updateList);
 });
 
 
