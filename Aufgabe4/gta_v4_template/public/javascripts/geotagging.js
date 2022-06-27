@@ -148,7 +148,14 @@ async function postAdd(geotag) {
         method: "POST", headers: {"Content-Type": "application/json"},                      //MimeType
         body: JSON.stringify(geotag),
     });
-    return await response.json();
+
+    let emptySearch = await fetch("http://localhost:3000/api/geotags?&offset=" + offset + "&searchterm=" + "" +
+        "&limit=" + elementsPerPage + "&latitude=" + "" + "&longitude=" + "", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+    });
+
+    return await emptySearch.json();
 }
 
 
@@ -172,7 +179,8 @@ document.getElementById("tag-form").addEventListener("submit", function (evt) {
         hashtag: document.getElementById("hashtag_id").value
     }
 
-    postAdd(geotag).then(updateMap).then(fetchPagination);
+    postAdd(geotag).then(updateMap);
+    fetchPagination();
     document.getElementById("name_id").value = "";
     document.getElementById("hashtag_id").value = "";
     document.getElementById("search_id").value = "";
@@ -222,6 +230,7 @@ document.getElementById("nextPage").addEventListener("click", function (evt) {
 document.addEventListener("DOMContentLoaded", () => {
     //alert("Please change the script 'geotagging.js'");
     updateLocation();
-    getTagList().then(updateMap).then(preparePagination);
-    fetchPagination().then(updateList);
+    getTagList().then(preparePagination);
+    fetchPagination().then(updateList).then(updateMap);
+
 }, true);
