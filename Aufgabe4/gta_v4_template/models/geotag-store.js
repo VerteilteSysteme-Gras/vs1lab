@@ -40,10 +40,10 @@ class InMemoryGeoTagStore {
      * @param gT GeoTag to add
      */
     addGeoTag(gT) {
-        if(!this.doesNameExist(gT)){
+        if (!this.doesNameExist(gT)) {
             this.#alltags.push(gT);
         }
-        
+
     }
 
     /**
@@ -59,7 +59,7 @@ class InMemoryGeoTagStore {
      * @param searchterm
      * @returns {@link GeoTag[]} - Array containing all matching GeoTags
      */
-    findGeoTagsBySearchTerm(searchterm){
+    findGeoTagsBySearchTerm(searchterm) {
         let ret = [];
         for (let i = 0; i < this.#alltags.length; i++) {
             if (this.#alltags[i].name.includes(searchterm) || this.#alltags[i].hashtag.includes(searchterm)) {
@@ -108,14 +108,25 @@ class InMemoryGeoTagStore {
 
     searchNearbyGeoTags(searchterm) {
         let ret = [];
-        this.#alltags.find((geoTag) => {
-            if (geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)) {
-                this.getNearbyGeoTags(geoTag).find((tag) => {
-                    if (!ret.includes(tag)) ret.push(tag);
-                });
-            }
-        });
-
+        if (searchterm.charAt(0) === '#') {
+            searchterm = searchterm.slice(1);
+            this.#alltags.find((geoTag) => {
+                    let hashtag = geoTag.hashtag.slice(1);
+                    if (hashtag.includes(searchterm)) {
+                        this.getNearbyGeoTags(geoTag).find((tag) => {
+                            if (!ret.includes(tag)) ret.push(tag);
+                        });
+                    }
+            });
+        } else {
+            this.#alltags.find((geoTag) => {
+                if (geoTag.name.includes(searchterm)) {
+                    this.getNearbyGeoTags(geoTag).find((tag) => {
+                        if (!ret.includes(tag)) ret.push(tag);
+                    });
+                }
+            });
+        }
         return ret;
     }
 
@@ -129,7 +140,7 @@ class InMemoryGeoTagStore {
     /**
      * Returns a GeoTag identified via its unique id (name lol)
      * @param id
-     * @returns 
+     * @returns
      */
     searchTagByID(id) {
         let ret = null;
@@ -138,12 +149,12 @@ class InMemoryGeoTagStore {
                 ret = tag;
             }
         });
-        
+
         return ret;
     }
 
-    doesNameExist(geotag){
-       const tag = this.#alltags.find((tag) => {
+    doesNameExist(geotag) {
+        const tag = this.#alltags.find((tag) => {
             if (tag.name === geotag.name) {
                 return true;
             }
@@ -151,10 +162,10 @@ class InMemoryGeoTagStore {
         return tag != undefined;
     }
 
-    changeGeoTag(geoTag, id){
+    changeGeoTag(geoTag, id) {
         let foundGeoTag = this.searchTagByID(id);
         // "!== undefined" nicht notwendig?
-        if(foundGeoTag !== null) {
+        if (foundGeoTag !== null) {
             this.removeGeoTag(foundGeoTag);
             this.addGeoTag(geoTag);
         }
